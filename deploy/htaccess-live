@@ -1,0 +1,33 @@
+# ז.ג דיגיטל — zigzagmedia.co.il
+Options -Indexes
+AddDefaultCharset UTF-8
+DirectoryIndex index.html
+ErrorDocument 404 /404.html
+
+RewriteEngine On
+# https + ללא www
+RewriteCond %{HTTPS} !=on [OR]
+RewriteCond %{HTTP_HOST} ^www\. [NC]
+RewriteRule ^ https://zigzagmedia.co.il%{REQUEST_URI} [R=301,L]
+
+# כתובות ישנות מהוורדפרס → האתר החדש
+RewriteRule ^(ליווי-ויעוץ|marketing-budget-management|data-management|zigzag-media-supersite)/?$ /#services [R=301,L,NE]
+RewriteRule ^(איך-מתמודדים-עם-קפיצת-הcpm-של-חודשי-הq4|הרשת-החברתית-והעסק-שלך|מזרח-אירופה-ופרסום-דיגיטלי|פרסום-דיגיטלי-בסין-סיכום-קצר-של-שבוע-עב)/?$ /knowledge.html [R=301,L,NE]
+RewriteRule ^category/.*$ /knowledge.html [R=301,L,NE]
+RewriteRule ^(author/.*|check-in-page|thank-you|thanks|sitemap_index\.xml|post-sitemap\.xml|page-sitemap\.xml|category-sitemap\.xml|author-sitemap\.xml)/?$ / [R=301,L]
+RewriteRule ^(wp-admin|wp-login\.php|wp-content|wp-includes|xmlrpc\.php|feed)(/.*)?$ / [R=301,L]
+
+# אבטחה וקאש
+<FilesMatch "\.(html|xml|txt)$">
+Header set Cache-Control "max-age=600, must-revalidate"
+</FilesMatch>
+<FilesMatch "\.(webp|jpg|png|svg|ico)$">
+Header set Cache-Control "public, max-age=31536000, immutable"
+</FilesMatch>
+Header always set X-Content-Type-Options "nosniff"
+Header always set Referrer-Policy "strict-origin-when-cross-origin"
+Header always set X-Frame-Options "SAMEORIGIN"
+Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+<FilesMatch "^(dark\.html)$">
+Header set X-Robots-Tag "noindex"
+</FilesMatch>
