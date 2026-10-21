@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /dark.html
+Sitemap: https://zigzagmedia.co.il/sitemap.xml

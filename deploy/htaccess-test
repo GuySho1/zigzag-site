@@ -1,0 +1,6 @@
+# Z.G Digital — test folder (/new). Not for indexing.
+Header set X-Robots-Tag "noindex, nofollow"
+Options -Indexes
+AddDefaultCharset UTF-8
+DirectoryIndex index.html
+ErrorDocument 404 /new/404.html
