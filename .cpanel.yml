@@ -1,0 +1,7 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/zigzagme/public_html/new
+    - /bin/mkdir -p $DEPLOYPATH
+    - /bin/cp -R site/. $DEPLOYPATH/
+    - /bin/cp deploy/htaccess-test $DEPLOYPATH/.htaccess
