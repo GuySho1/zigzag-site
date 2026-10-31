@@ -65,6 +65,14 @@ CONTENT_CSS = '''<style>
 .post pre{background:var(--ink);color:var(--bg);padding:16px 18px;overflow:auto;font-size:15px;line-height:1.6;margin:0 0 18px;direction:ltr;text-align:left}
 .post pre code{background:none;padding:0;color:inherit}
 .post a{color:var(--moon);font-weight:700}
+.post table{width:100%;border-collapse:collapse;margin:0 0 22px;font-size:16px}
+.post th,.post td{border:2px solid var(--line);padding:8px 12px;text-align:start;vertical-align:top}
+.post th{background:var(--ink);color:var(--bg);font-weight:900}
+.post .ph{background:var(--bg2);border:2px dashed var(--dim);color:var(--dim);padding:14px 16px;margin:0 0 18px;font-size:15px}
+.post .fig{margin:8px 0 26px;text-align:center}
+.post .fig img{margin:0;max-width:min(100%,640px)}
+.post .fig.tall img{max-width:min(100%,420px)}
+.post .fig figcaption{color:var(--dim);font-size:15px;line-height:1.5;margin-top:10px;text-align:start}
 .post .tool{display:inline-block;margin-inline-start:10px;color:var(--dim);font-weight:400}
 .post .ep{display:inline-block;background:var(--ink);color:var(--bg);font-weight:900;padding:2px 10px;margin-inline-end:8px;font-size:14px}
 .hub .filters{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 6px}
@@ -79,9 +87,18 @@ CONTENT_CSS = '''<style>
 .hub .item .meta{color:var(--dim);font-size:14px;margin-top:10px}
 .hub .item[hidden]{display:none}
 .hub .count{color:var(--dim);font-size:15px;margin:0 0 18px}
+.hub h2.grp{font-size:clamp(26px,3.4vw,38px);margin:40px 0 6px}
+.hub p.grp{color:var(--dim);margin:0 0 18px;max-width:65ch}
+.hub .list.plain{grid-template-columns:1fr;gap:12px}
+.hub .list.plain .item{flex-direction:row;align-items:baseline;gap:18px;padding:16px 22px}
+.hub .list.plain .item .txt{padding:0;flex:1}
+.hub .list.plain .item h2{font-size:22px;margin:4px 0 6px}
+.hub .list.plain .item p{margin:0}
+.hub .list.plain .item .meta{margin-top:6px}
 </style>'''
 
 def md(text):
+    text = re.sub(r'^\[צילום מסך: (.*?)\]$', r'<p class="ph">[צילום מסך יתווסף כאן: \1]</p>', text, flags=re.M)
     return markdown.markdown(text, extensions=['extra', 'sane_lists', 'smarty'], output_format='html5')
 
 for i, a in enumerate(ARTS):
@@ -117,14 +134,16 @@ for i, a in enumerate(ARTS):
          extra_head=CONTENT_CSS + '<script type="application/ld+json">' + json.dumps(ld, ensure_ascii=False) + '</script>')
 
 # ---------------- knowledge hub ----------------
-def card(a):
+def card(a, cover=True):
     cov = ''
-    if a.get('cover'):
+    if cover and a.get('cover'):
         cov = f'<div class="cov"><img src="{a["cover"]}" alt="" loading="lazy" width="960" height="540"></div>'
     ep = f'<span class="ep">פרק {a["episode"]}</span>' if a.get('episode') else ''
     return (f'<a class="item" href="articles/{a["slug"]}.html" data-cat="{H.escape(a["cat"], quote=True)}">{cov}<div class="txt">'
             f'<p class="eyebrow">{ep}{H.escape(a["cat"])}</p><h2>{H.escape(a["title"])}</h2><p>{H.escape(a["desc"])}</p>'
             f'<p class="meta">{heb_date(a["date"])} · {a["read"]} דקות קריאה{(" · " + H.escape(a["tool"])) if a.get("tool") else ""}</p></div></a>')
+SERIES = sorted([a for a in ARTS if a.get('episode')], key=lambda a: int(a['episode']))
+REST = [a for a in ARTS if not a.get('episode')]
 cats_present = [c for c in CATS if any(a['cat'] == c for a in ARTS)]
 filters = '<button type="button" aria-pressed="true" data-f="">הכול</button>' + ''.join(f'<button type="button" aria-pressed="false" data-f="{H.escape(c, quote=True)}">{H.escape(c)}</button>' for c in cats_present)
 hub_js = '''<script>document.addEventListener('DOMContentLoaded',()=>{const bs=[...document.querySelectorAll('.hub .filters button')],items=[...document.querySelectorAll('.hub .item')],n=document.getElementById('count');
@@ -136,7 +155,12 @@ page('knowledge.html', 'ידע · Z.G Digital', 'מדור הידע של ז.ג ד
   <p class="lead" style="max-width:65ch">מה כל יכולת חדשה עושה בשבילכם בקמפיין, מחר בבוקר. סרטון של חצי דקה, ומדריך מלא עם הצעדים, המחירים והמגבלות.</p>
   <div class="filters" role="group" aria-label="סינון לפי נושא">{filters}</div>
   <p class="count" id="count">{len(ARTS)} מאמרים</p>
-  <div class="list">{''.join(card(a) for a in ARTS)}</div>
+  <h2 class="grp">הסדרה: הצ'אט שעובד</h2>
+  <p class="grp">פרק בשבוע. בכל פרק יכולת אחת שאנחנו משתמשים בה בעבודה, סרטון קצר באינסטגרם, והמדריך המלא כאן.</p>
+  <div class="list">{''.join(card(a) for a in SERIES)}</div>
+  <h2 class="grp">עוד מאמרים</h2>
+  <p class="grp">על פרסום ממומן, תשתית ואסטרטגיה.</p>
+  <div class="list plain">{''.join(card(a, cover=False) for a in REST)}</div>
 </div></section>''', extra_head=CONTENT_CSS + hub_js)
 
 # ---------------- sitemap ----------------
