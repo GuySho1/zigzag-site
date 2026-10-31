@@ -28,6 +28,7 @@ InterContinental David Tel Aviv, Clover Security, yes, זוגלובק, אוני�
 
 ## מאמרים (מדור הידע)
 
+- [המחבר של מטא: ככה מנהלים חשבונות פרסום מתוך הצ'אט](https://zigzagmedia.co.il/articles/meta-ads-connector.html): מה המחבר הרשמי של מנהל המודעות יודע לעשות, איך הוא רואה את הפיקסל והאירועים טוב יותר מרוב בני האדם, שלושה מקרים מהעבודה שלנו, ומה הוא עדיין לא יודע לבד.
 - [איך מחברים מודל שפה למערכות שלכם (ולמה בלי זה הוא רק צ'אט)](https://zigzagmedia.co.il/articles/connect-ai-to-your-systems.html): ארבע רמות חיבור בין מודל שפה לכלים של העסק, מהעתק־הדבק ועד MCP, מה עושים כשאין מחבר רשמי, ומה אנחנו נותנים לסוכן לעשות לבד ומה לא.
 - [גדול זה לא מסובך, זה אחרת](https://zigzagmedia.co.il/articles/big-budgets-are-different.html): מה משתנה כשמנהלים מאות אלפי שקלים בחודש על כמה פלטפורמות: קצב תקציב, תקרות הצעה, מודל ייחוס אחד ודוח מאוחד.
 - [תשתית לפני הכול: למה Business Manager מסודר שווה יותר מקמפיין מושקע](https://zigzagmedia.co.il/articles/infrastructure-before-everything.html): לפני שמוציאים שקל על פרסום: פיקסל, אירועי המרה, Conversions API, גוגל אנליטיקס 4 ותג מנג'ר. תשתית חזקה = נתונים אמיתיים = החלטות נכונות.

@@ -112,7 +112,7 @@ for i, a in enumerate(ARTS):
     if a.get('video'):
         poster = f' poster="../{a["poster"]}"' if a.get('poster') else ''
         video = f'<figure class="vid"><video controls playsinline preload="metadata"{poster} src="../{a["video"]}" aria-label="הסרטון הקצר: {H.escape(a["title"], quote=True)}"></video></figure>'
-    ep = f'<span class="ep">פרק {a["episode"]}</span>' if a.get('episode') else ''
+    ep = ''
     tool = f'<span class="tool">· {H.escape(a["tool"])}</span>' if a.get('tool') else ''
     cta_t, cta_h = 'שלחו לנו את החשבון לבדיקה', '../index.html#contact'
     if a.get('cta') and '|' in a['cta']:
@@ -141,7 +141,7 @@ def card(a, cover=True):
     cov = ''
     if cover and a.get('cover'):
         cov = f'<div class="cov"><img src="{a["cover"]}" alt="" loading="lazy" width="960" height="540"></div>'
-    ep = f'<span class="ep">פרק {a["episode"]}</span>' if a.get('episode') else ''
+    ep = ''
     return (f'<a class="item" href="articles/{a["slug"]}.html" data-cat="{H.escape(a["cat"], quote=True)}">{cov}<div class="txt">'
             f'<p class="eyebrow">{ep}{H.escape(a["cat"])}</p><h2>{H.escape(a["title"])}</h2><p>{H.escape(a["desc"])}</p>'
             f'<p class="meta">{heb_date(a["date"])} · {a["read"]} דקות קריאה{(" · " + H.escape(a["tool"])) if a.get("tool") else ""}</p></div></a>')
