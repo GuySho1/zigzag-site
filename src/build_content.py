@@ -65,6 +65,9 @@ CONTENT_CSS = '''<style>
 .post pre{background:var(--ink);color:var(--bg);padding:16px 18px;overflow:auto;font-size:15px;line-height:1.6;margin:0 0 18px;direction:ltr;text-align:left}
 .post pre code{background:none;padding:0;color:inherit}
 .post a{color:var(--moon);font-weight:700}
+.post .cta{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:center;margin:34px 0 10px}
+.post .cta a.btn{color:#fff;background:var(--moon);font-weight:700;text-decoration:none}
+.post .cta a.link{font-weight:700}
 .post table{width:100%;border-collapse:collapse;margin:0 0 22px;font-size:16px}
 .post th,.post td{border:2px solid var(--line);padding:8px 12px;text-align:start;vertical-align:top}
 .post th{background:var(--ink);color:var(--bg);font-weight:900}
@@ -127,7 +130,7 @@ for i, a in enumerate(ARTS):
   {video}
   <p class="sum"><b>בקצרה:</b> {H.escape(a['desc'])}</p>
   {md(a['body_md'])}
-  <div class="cta"><a class="btn" href="{cta_h}">{H.escape(cta_t)}</a><a class="link" href="../knowledge.html">לכל המאמרים →</a></div>
+  <div class="cta"><a class="btn" href="{cta_h}">{H.escape(cta_t)}</a><a class="link" href="../knowledge.html">לכל המאמרים</a></div>
   <div class="more"><h2>עוד בנושא</h2><ul>{more}</ul></div>
 </div></article>'''
     page(f'articles/{a["slug"]}.html', a['title'] + ' · Z.G Digital', a['desc'], body, depth=1,
