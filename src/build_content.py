@@ -159,7 +159,7 @@ page('knowledge.html', 'מידע שימושי · Z.G Digital', 'מידע שימ�
   <div class="filters" role="group" aria-label="סינון לפי נושא">{filters}</div>
   <p class="count" id="count">{len(ARTS)} מאמרים</p>
   <h2 class="grp">הסדרה: הצ'אט שעובד</h2>
-  <p class="grp">בכל פרק כלי אחד: מה הוא עושה, איך מחברים אותו, ומה המגבלות.</p>
+  <p class="grp">בכל מאמר כלי אחד: מה הוא עושה, איך מחברים אותו, ומה המגבלות.</p>
   <div class="list">{''.join(card(a) for a in SERIES)}</div>
   <h2 class="grp">עוד מאמרים</h2>
   <p class="grp">על פרסום ממומן, תשתית ואסטרטגיה.</p>
