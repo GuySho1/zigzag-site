@@ -148,15 +148,15 @@ cats_present = [c for c in CATS if any(a['cat'] == c for a in ARTS)]
 filters = '<button type="button" aria-pressed="true" data-f="">הכול</button>' + ''.join(f'<button type="button" aria-pressed="false" data-f="{H.escape(c, quote=True)}">{H.escape(c)}</button>' for c in cats_present)
 hub_js = '''<script>document.addEventListener('DOMContentLoaded',()=>{const bs=[...document.querySelectorAll('.hub .filters button')],items=[...document.querySelectorAll('.hub .item')],n=document.getElementById('count');
 bs.forEach(b=>b.addEventListener('click',()=>{bs.forEach(x=>x.setAttribute('aria-pressed',x===b));const f=b.dataset.f;let k=0;items.forEach(it=>{const show=!f||it.dataset.cat===f;it.hidden=!show;if(show)k++;});n.textContent=k+' מאמרים';}));});</script>'''
-page('knowledge.html', 'ידע · Z.G Digital', 'מדור הידע של ז.ג דיגיטל: כלי ויכולת אחת בכל מאמר, מהעולם של פרסום ממומן ובינה מלאכותית, עם סרטון קצר ומדריך מלא.',
+page('knowledge.html', 'מידע שימושי · Z.G Digital', 'מידע שימושי מז.ג דיגיטל: כלים פרקטיים לעבודה בפרסום ממומן ובבינה מלאכותית, ואיך מחברים אותם לזרימת העבודה.',
      f'''<section class="sec page hub"><div class="wrap">
   <p class="eyebrow">ידע</p>
-  <h1 class="post" style="font-size:clamp(36px,5vw,64px);margin:10px 0 8px">כלי אחד, רעיון אחד, כל שבוע.</h1>
-  <p class="lead" style="max-width:65ch">מה כל יכולת חדשה עושה בשבילכם בקמפיין, מחר בבוקר. סרטון של חצי דקה, ומדריך מלא עם הצעדים, המחירים והמגבלות.</p>
+  <h1 class="post" style="font-size:clamp(36px,5vw,64px);margin:10px 0 8px">מידע שימושי</h1>
+  <p class="lead" style="max-width:65ch">רשימת כלים פרקטיים לעבודה, ואיך מחברים אותם לזרימת העבודה שלנו.</p>
   <div class="filters" role="group" aria-label="סינון לפי נושא">{filters}</div>
   <p class="count" id="count">{len(ARTS)} מאמרים</p>
   <h2 class="grp">הסדרה: הצ'אט שעובד</h2>
-  <p class="grp">פרק בשבוע. בכל פרק יכולת אחת שאנחנו משתמשים בה בעבודה, סרטון קצר באינסטגרם, והמדריך המלא כאן.</p>
+  <p class="grp">בכל פרק כלי אחד: מה הוא עושה, איך מחברים אותו, ומה המגבלות.</p>
   <div class="list">{''.join(card(a) for a in SERIES)}</div>
   <h2 class="grp">עוד מאמרים</h2>
   <p class="grp">על פרסום ממומן, תשתית ואסטרטגיה.</p>
