@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>ידע · Z.G Digital</title>
-<meta name="description" content="קצת ידע לדרך: תשתית ודאטה, אסטרטגיה, ותקציבים גדולים. מאמרים קצרים מתוך 15 שנה של פרסום ממומן.">
+<meta name="description" content="מדור הידע של ז.ג דיגיטל: כלי ויכולת אחת בכל מאמר, מהעולם של פרסום ממומן ובינה מלאכותית, עם סרטון קצר ומדריך מלא.">
 <meta property="og:title" content="ידע · Z.G Digital">
-<meta property="og:description" content="קצת ידע לדרך: תשתית ודאטה, אסטרטגיה, ותקציבים גדולים. מאמרים קצרים מתוך 15 שנה של פרסום ממומן.">
+<meta property="og:description" content="מדור הידע של ז.ג דיגיטל: כלי ויכולת אחת בכל מאמר, מהעולם של פרסום ממומן ובינה מלאכותית, עם סרטון קצר ומדריך מלא.">
 <meta property="og:image" content="https://zigzagmedia.co.il/og.jpg">
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta property="og:type" content="website"><meta property="og:locale" content="he_IL"><meta name="twitter:card" content="summary_large_image">
@@ -257,7 +257,35 @@ fbq('init','386396115213106');fbq('track','PageView');
 .lost .grid{align-items:center}
 </style>
 <script>document.addEventListener('DOMContentLoaded',()=>{const nav=document.querySelector('.nav');let last=scrollY;addEventListener('scroll',()=>{const y=scrollY;if(!matchMedia('(max-width:899px)').matches){nav.classList.remove('away');last=y;return;}if(y>last+8&&y>140)nav.classList.add('away');else if(y<last-8||y<80)nav.classList.remove('away');last=y;},{passive:true});});</script>
-</head>
+<style>
+.post .vid{margin:0 0 28px;border:3px solid var(--line);background:var(--ink);position:relative;box-shadow:10px 10px 0 var(--moon)}
+.post .vid video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#000}
+.post .sum{background:var(--bg2);border-inline-start:4px solid var(--moon);padding:16px 18px;margin:0 0 28px;font-size:17px;line-height:1.65}
+.post .sum b{font-weight:900}
+.post ul,.post ol{padding-inline-start:22px;margin:0 0 18px;font-size:18px;line-height:1.75}
+.post li{margin:6px 0}
+.post blockquote{margin:0 0 18px;padding:12px 18px;border-inline-start:4px solid var(--line);color:var(--dim);font-size:18px}
+.post img{max-width:100%;height:auto;border:3px solid var(--line);margin:8px 0 18px}
+.post code{font-family:ui-monospace,monospace;font-size:.92em;background:var(--bg2);padding:1px 6px}
+.post pre{background:var(--ink);color:var(--bg);padding:16px 18px;overflow:auto;font-size:15px;line-height:1.6;margin:0 0 18px;direction:ltr;text-align:left}
+.post pre code{background:none;padding:0;color:inherit}
+.post a{color:var(--moon);font-weight:700}
+.post .tool{display:inline-block;margin-inline-start:10px;color:var(--dim);font-weight:400}
+.post .ep{display:inline-block;background:var(--ink);color:var(--bg);font-weight:900;padding:2px 10px;margin-inline-end:8px;font-size:14px}
+.hub .filters{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 6px}
+.hub .filters button{min-height:44px;padding:8px 16px;border:3px solid var(--line);background:transparent;color:var(--fg);font:inherit;font-weight:700;cursor:pointer}
+.hub .filters button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+.hub .filters button:focus-visible{outline:3px solid var(--moon);outline-offset:2px}
+.hub .list{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+.hub .item{display:flex;flex-direction:column;gap:6px;padding:0;overflow:hidden}
+.hub .item .cov{aspect-ratio:16/9;background:var(--ink);overflow:hidden;border-bottom:3px solid var(--line)}
+.hub .item .cov img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(1) contrast(1.05)}
+.hub .item .txt{padding:18px 22px 22px}
+.hub .item .meta{color:var(--dim);font-size:14px;margin-top:10px}
+.hub .item[hidden]{display:none}
+.hub .count{color:var(--dim);font-size:15px;margin:0 0 18px}
+</style><script>document.addEventListener('DOMContentLoaded',()=>{const bs=[...document.querySelectorAll('.hub .filters button')],items=[...document.querySelectorAll('.hub .item')],n=document.getElementById('count');
+bs.forEach(b=>b.addEventListener('click',()=>{bs.forEach(x=>x.setAttribute('aria-pressed',x===b));const f=b.dataset.f;let k=0;items.forEach(it=>{const show=!f||it.dataset.cat===f;it.hidden=!show;if(show)k++;});n.textContent=k+' מאמרים';}));});</script></head>
 <body>
 <a class="skip" href="#main">דלג לתוכן</a>
 <nav class="nav" aria-label="ראשי">
@@ -284,11 +312,13 @@ fbq('init','386396115213106');fbq('track','PageView');
   </ul>
 </nav>
 <main id="main">
-<section class="sec page"><div class="wrap narrow">
+<section class="sec page hub"><div class="wrap">
   <p class="eyebrow">ידע</p>
-  <h1 class="post" style="font-size:clamp(36px,5vw,64px);margin:10px 0 8px">קצת ידע לדרך.</h1>
-  <p class="lead">שלושה דברים שאנחנו אומרים לכל לקוח חדש, בלי קשר לגודל התקציב.</p>
-  <div class="list"><a class="item" href="articles/infrastructure-before-everything.html"><p class="eyebrow">תשתית ודאטה</p><h2>תשתית לפני הכול: למה Business Manager מסודר שווה יותר מקמפיין מושקע</h2><p>לפני שמוציאים שקל על פרסום: פיקסל, אירועי המרה, Conversions API, גוגל אנליטיקס 4 ותג מנג&#x27;ר. תשתית חזקה = נתונים אמיתיים = החלטות נכונות.</p></a><a class="item" href="articles/strategy-not-template.html"><p class="eyebrow">אסטרטגיה</p><h2>פרסום שמאחוריו ראש, ולא שבלונה</h2><p>למה קמפיין שהועתק מהמתחרה נראה טוב על הנייר ולא מוכר כלום, ואיך מתאימים את המתודולוגיה לתקציב של 3,000 ש&quot;ח ושל 80,000 ש&quot;ח בחודש.</p></a><a class="item" href="articles/big-budgets-are-different.html"><p class="eyebrow">תקציבים גדולים</p><h2>גדול זה לא מסובך, זה אחרת</h2><p>מה משתנה כשמנהלים מאות אלפי שקלים בחודש על כמה פלטפורמות: קצב תקציב, תקרות הצעה, מודל ייחוס אחד ודוח מאוחד.</p></a></div>
+  <h1 class="post" style="font-size:clamp(36px,5vw,64px);margin:10px 0 8px">כלי אחד, רעיון אחד, כל שבוע.</h1>
+  <p class="lead" style="max-width:65ch">מה כל יכולת חדשה עושה בשבילכם בקמפיין, מחר בבוקר. סרטון של חצי דקה, ומדריך מלא עם הצעדים, המחירים והמגבלות.</p>
+  <div class="filters" role="group" aria-label="סינון לפי נושא"><button type="button" aria-pressed="true" data-f="">הכול</button><button type="button" aria-pressed="false" data-f="תשתית ודאטה">תשתית ודאטה</button><button type="button" aria-pressed="false" data-f="אסטרטגיה">אסטרטגיה</button><button type="button" aria-pressed="false" data-f="תקציבים גדולים">תקציבים גדולים</button></div>
+  <p class="count" id="count">3 מאמרים</p>
+  <div class="list"><a class="item" href="articles/big-budgets-are-different.html" data-cat="תקציבים גדולים"><div class="txt"><p class="eyebrow">תקציבים גדולים</p><h2>גדול זה לא מסובך, זה אחרת</h2><p>מה משתנה כשמנהלים מאות אלפי שקלים בחודש על כמה פלטפורמות: קצב תקציב, תקרות הצעה, מודל ייחוס אחד ודוח מאוחד.</p><p class="meta">פברואר 2026 · 3 דקות קריאה</p></div></a><a class="item" href="articles/infrastructure-before-everything.html" data-cat="תשתית ודאטה"><div class="txt"><p class="eyebrow">תשתית ודאטה</p><h2>תשתית לפני הכול: למה Business Manager מסודר שווה יותר מקמפיין מושקע</h2><p>לפני שמוציאים שקל על פרסום: פיקסל, אירועי המרה, Conversions API, גוגל אנליטיקס 4 ותג מנג&#x27;ר. תשתית חזקה = נתונים אמיתיים = החלטות נכונות.</p><p class="meta">פברואר 2026 · 3 דקות קריאה</p></div></a><a class="item" href="articles/strategy-not-template.html" data-cat="אסטרטגיה"><div class="txt"><p class="eyebrow">אסטרטגיה</p><h2>פרסום שמאחוריו ראש, ולא שבלונה</h2><p>למה קמפיין שהועתק מהמתחרה נראה טוב על הנייר ולא מוכר כלום, ואיך מתאימים את המתודולוגיה לתקציב של 3,000 ש&quot;ח ושל 80,000 ש&quot;ח בחודש.</p><p class="meta">פברואר 2026 · 3 דקות קריאה</p></div></a></div>
 </div></section>
 </main>
 <footer>
