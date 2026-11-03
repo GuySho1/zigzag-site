@@ -384,7 +384,7 @@ oaiq("init",{pixelId:"CbBgBJtt4xhQJgymGrK5Ys"});oaiq("measure","page_viewed",{ty
       <h2 class="rv">צריכים עזרה?<br><span class="k">דברו איתנו עכשיו.</span></h2>
       <p class="lead rv">שיחה אחת, בלי התחייבות. נספר לכם מה היינו עושים עם התקציב שלכם, ואיפה לדעתנו יש כסף על הרצפה.</p>
       <div class="price rv"><p class="eyebrow">כמה זה עולה</p><p>הריטיינר החודשי נקבע לפי מספר הפלטפורמות שאנחנו מפעילים, תקציב המדיה והשירותים המשלימים, ומתחיל מ־<b>3,500 ₪ לחודש</b>. בתקציבים גדולים עובדים גם במודל של ריטיינר בסיסי בתוספת אחוז מתקציב הפרסום, מההכנסות או מהרווח שנוסף, בהסכמה ובהסכם חתום.</p></div>
-      <form class="form rv" id="form" novalidate>
+      <form class="form rv" id="form" novalidate data-thanks="thanks.html">
         <div class="fields">
           <div class="field"><label for="f-name">שם מלא <span class="req">(חובה)</span></label><input id="f-name" name="name" autocomplete="name" dir="auto" required aria-describedby="e-name"><p class="err" id="e-name"></p></div>
           <div class="field"><label for="f-phone">טלפון <span class="req">(חובה)</span></label><input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" dir="ltr" placeholder="052-1234567" required aria-describedby="h-phone e-phone"><p class="hint" id="h-phone">כדי שנחזור אליכם בוואטסאפ או בשיחה. כל פורמט מתקבל.</p><p class="err" id="e-phone"></p></div>
@@ -514,7 +514,7 @@ function morpher(el,texts,colors,morph,hold){ const a=el.querySelector('.m1'), b
   Object.keys(F).forEach(k=>{ F[k].addEventListener('blur',()=>check(k)); F[k].addEventListener('input',()=>{ if(F[k].closest('.field').classList.contains('bad')) check(k); }); });
   const btn=f.querySelector('button[type=submit]'), ok=document.getElementById('ok');
   if(!LEAD_ENDPOINT) btn.textContent='שלחו לנו בוואטסאפ';
-  const done=(viaWa)=>{ f.classList.add('sent'); if(viaWa) ok.querySelector('p').innerHTML='פתחנו לכם וואטסאפ עם הפרטים, נשאר רק ללחוץ "שלח". דחוף? <a href="'+WA_URL+'" target="_blank" rel="noopener">כתבו לנו ישירות</a>.'; ok.hidden=false; ok.focus(); try{ if(window.fbq) fbq('track','Lead'); if(window.oaiq) oaiq('measure','lead_created',{type:'customer_action'}); if(window.gtag) gtag('event','generate_lead'); }catch(_){} };
+  const done=(viaWa)=>{ try{ sessionStorage.setItem('zg_lead','1'); }catch(_){} location.href=(f.dataset.thanks||'thanks.html')+(viaWa?'?via=wa':''); };
   const payload=()=>({name:F.name.value.trim(),phone:F.phone.value.trim(),biz:document.getElementById('f-biz').value.trim(),website:document.getElementById('f-web').value,page:location.href});
   const viaWhatsApp=p=>{ const t=`היי, אני ${p.name}. טלפון: ${p.phone}.${p.biz?' '+p.biz:''} (מהאתר)`; window.open(WA_URL+'?text='+encodeURIComponent(t),'_blank','noopener'); done(true); };
   f.addEventListener('submit',async e=>{ e.preventDefault(); const bad=Object.keys(F).filter(k=>!check(k)); if(bad.length){ F[bad[0]].focus(); return; }

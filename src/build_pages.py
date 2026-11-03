@@ -29,6 +29,31 @@ page('accessibility.html', 'הצהרת נגישות · Z.G Digital', 'הצהרת
   <p>ההצהרה נכתבה בהתאם לנדרש בתקנות, ותעודכן עם כל שינוי מהותי באתר.</p>
 </div></section>''')
 
+# ---------------- דף תודה (אחרי שליחת הטופס; כאן נמדדים הלידים) ----------------
+page('thanks.html', 'תודה, קיבלנו · Z.G Digital', 'הפנייה שלכם התקבלה. נחזור אליכם עד מחר בבוקר.',
+     '''<section class="sec page lost"><div class="wrap grid">
+  <div class="copy">
+    <p class="eyebrow">תודה</p>
+    <h1 style="font-size:clamp(40px,6vw,76px)">קיבלנו.<br><span class="k">נחזור אליכם.</span></h1>
+    <p class="lead" id="thx-lead">הפרטים אצלנו. נחזור אליכם עד מחר בבוקר, בדרך כלל הרבה לפני.</p>
+    <p class="lead" id="thx-wa" hidden>פתחנו לכם וואטסאפ עם הפרטים, נשאר רק ללחוץ "שלח". משם נמשיך.</p>
+    <div class="cta"><a class="btn" href="https://wa.me/972525649801" target="_blank" rel="noopener">דחוף? וואטסאפ</a><a class="link" href="knowledge.html">בינתיים, מידע שימושי ←</a></div>
+    <p class="meta" style="margin-top:22px;color:var(--dim)"><a href="index.html" style="color:inherit">חזרה לדף הבית</a></p>
+  </div>
+  <figure class="frame" style="aspect-ratio:1/1;width:min(100%,460px);justify-self:center"><div class="pic"><picture><source type="image/webp" srcset="art/w/roof-480.webp 480w, art/w/roof-800.webp 800w, art/w/roof-1047.webp 1047w" sizes="(max-width:899px) calc(100vw - 40px), 460px"><img src="art/roof.jpg" alt="איור דיו של גג תל אביבי מול ירח סגול" width="1300" height="1300"></picture></div></figure>
+</div></section>
+<script>
+(function(){
+  if(new URLSearchParams(location.search).get('via')==='wa'){ document.getElementById('thx-lead').hidden=true; document.getElementById('thx-wa').hidden=false; }
+  // מדידת ליד: פעם אחת לכל שליחה (לא ברענון של הדף)
+  var fresh=false; try{ fresh=sessionStorage.getItem('zg_lead')==='1'; if(fresh) sessionStorage.removeItem('zg_lead'); }catch(_){ fresh=true; }
+  if(!fresh) return;
+  try{ if(window.fbq) fbq('track','Lead'); }catch(_){}
+  try{ if(window.oaiq) oaiq("measure","lead_created",{ type: "customer_action" }); }catch(_){}
+  try{ if(window.gtag) gtag('event','generate_lead'); }catch(_){}
+})();
+</script>''', extra_head='<meta name="robots" content="noindex">')
+
 # ---------------- 404 ----------------
 ROOT404 = True
 page('404.html', 'הדף הלך לאיבוד · Z.G Digital', 'הדף שחיפשתם לא נמצא. חזרו לדף הבית של Z.G Digital או דברו איתנו.',
