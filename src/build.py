@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # the calm site: one ordinary scroll, the comic frames as pictures, quiet motion only
-import re, json
+import re, json, os
 NAV = open('/home/claude/site/frag_nav.html').read()
 LOGO = re.search(r'<svg.*?</svg>', NAV, re.S).group(0).replace('#F0EEFF','#0A061B').replace('#7C3AED','#8526FD').replace('#8C87A3','#6A6480')
 LOGO_CREAM = re.search(r'<svg.*?</svg>', NAV, re.S).group(0).replace('#F0EEFF','#F3EADA').replace('#7C3AED','#8526FD').replace('#8C87A3','#B9B0D6')
@@ -567,4 +567,6 @@ if THEME=='dark': html = html.replace('<link rel="canonical" href="https://zigza
 out = (html.replace('__LOGO_CREAM__',LOGO_CREAM).replace('__LOGO__',LOGO_NAV).replace('__WA__',WA).replace('__PL__',PHONE_LOCAL).replace('__MAIL__',MAIL).replace('__PHONE_INTL__',PHONE_INTL)
         .replace('__LD__','<script type="application/ld+json">'+json.dumps(LD_ORG,ensure_ascii=False)+'</script>')
         .replace('__TICK__',''.join(f'<span>{p}</span>' for p in PLATFORMS)))
+if os.environ.get('CLEAN_URLS') == '1':
+    import site_common_clean; out = site_common_clean.clean_urls(out)
 open(OUT,'w').write(out); print('written',THEME,len(out))

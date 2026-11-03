@@ -21,7 +21,7 @@
 # Build: python3 build_content.py   (after build.py light; before build_pages.py is fine too)
 import re, os, json, html as H, datetime
 import markdown
-from site_common import page, rel, head
+from site_common import page, rel, head, clean_urls
 
 SITE = 'https://zigzagmedia.co.il'
 CATS = ['קריאייטיב', 'נתונים ודוחות', 'אוטומציה', 'קמפיינים', 'תשתית ודאטה', 'אסטרטגיה', 'תקציבים גדולים']
@@ -170,7 +170,7 @@ page('knowledge.html', 'מידע שימושי · Z.G Digital', 'מידע שימ�
 today = datetime.date.today().isoformat()
 urls = [('/', today), ('/knowledge.html', today)] + [(f'/articles/{a["slug"]}.html', a['date']) for a in ARTS] + [('/accessibility.html', '2026-10-21'), ('/agents.html', '2026-10-21')]
 open('sitemap.xml', 'w', encoding='utf-8').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
-    ''.join(f'  <url><loc>{SITE}{u}</loc><lastmod>{d}</lastmod></url>\n' for u, d in urls) + '</urlset>\n')
+    ''.join(f'  <url><loc>{clean_urls(SITE + u)}</loc><lastmod>{d}</lastmod></url>\n' for u, d in urls) + '</urlset>\n')
 
 # ---------------- llms.txt: the articles section ----------------
 t = open('llms.txt', encoding='utf-8').read()
@@ -179,5 +179,5 @@ if '## מאמרים' in t:
     t = re.sub(r'## מאמרים.*?(?=\n## |\Z)', sec.rstrip('\n') + '\n', t, flags=re.S)
 else:
     t = t.replace('## יצירת קשר', sec + '## יצירת קשר') if '## יצירת קשר' in t else t + '\n' + sec
-open('llms.txt', 'w', encoding='utf-8').write(t)
+open('llms.txt', 'w', encoding='utf-8').write(clean_urls(t))
 print('articles:', len(ARTS), '| sitemap + llms.txt updated')

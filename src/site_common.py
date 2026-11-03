@@ -1,6 +1,24 @@
 # Shared helpers for the sub-pages: head/nav/footer from index.html, rel(), page()
 import re, os, json, html as H
 os.chdir('/home/claude/site/calm')
+CLEAN = os.environ.get('CLEAN_URLS') == '1'   # 1 = כתובות בלי .html (האתר החי); 0 = קבצים סטטיים (תצוגה מקדימה)
+SITE_ROOT = 'https://zigzagmedia.co.il'
+
+def clean_urls(s):
+    """Turn every internal .html link into a root-absolute clean URL (knowledge.html → /knowledge, index.html#x → /#x)."""
+    if not CLEAN: return s
+    def fix(m):
+        attr, url, frag = m.group(1), m.group(2), m.group(3) or ''
+        pre = ''
+        if url.startswith(SITE_ROOT + '/'): pre, url = SITE_ROOT, url[len(SITE_ROOT)+1:]
+        while url.startswith('../') or url.startswith('./'): url = url[3:] if url.startswith('../') else url[2:]
+        url = url.lstrip('/')
+        url = '' if url == 'index.html' else url[:-5]
+        return f'{attr}="{pre}/{url}{frag}"'
+    s = re.sub(r'\b(href|content)="((?:https://zigzagmedia\.co\.il/)?[^"#:]*?\.html)(#[^"]*)?"', fix, s)
+    s = re.sub(r'https://zigzagmedia\.co\.il/((?:[\w\-/]+?))\.html(?=["\s<)]|$)', lambda m: SITE_ROOT + '/' + ('' if m.group(1) == 'index' else m.group(1)), s)
+    return s
+
 base = open('index.html', encoding='utf-8').read()
 head = re.search(r'<head>.*?</head>', base, re.S).group(0)
 nav = re.search(r'<a class="skip".*?</nav>', base, re.S).group(0)
@@ -53,6 +71,7 @@ def page(path, title, desc, body, depth=0, extra_head='', canonical=None):
     out = f'<!doctype html>\n<html lang="he" dir="rtl">\n{rel(h, depth)}\n<body>\n{rel(nav, depth)}\n<main id="main">\n{body}\n</main>\n{rel(footer, depth)}\n</body></html>'
     if path == '404.html':
         out = re.sub(r'(href|src|content)="(?!https?:|/|#|mailto:|tel:|data:)([^"]+)"', r'\1="/\2"', out)
+    out = clean_urls(out)
     os.makedirs(os.path.dirname(path) or '.', exist_ok=True)
     open(path, 'w', encoding='utf-8').write(out)
     print('written', path, len(out))
