@@ -1,0 +1,60 @@
+<script>
+(function(){
+  const stage=document.getElementById('thx-moon'); if(!stage) return;
+  function run(){
+const $=s=>stage.querySelector(s);
+const NL=9; const L=[...Array(NL)].map(()=>({p:0})); let BB=null;
+const st={u:0,ey:640,mx:1522,my:817,mr:240,blur:0,shx:0,shy:52,shO:0,onArc:1,ringsO:1,paper:0,frame:1,wipe2:0,rot:0,ly:0,sx:1,sy:1,pulse:1,ringR:7.25,ringO:0};
+const DOTX=243.00, DOTY=579.25, DOTR=9.062;
+function lerpColor(a,b,t){const p=x=>parseInt(x,16);const c=(i)=>Math.round(p(a.substr(i,2))+(p(b.substr(i,2))-p(a.substr(i,2)))*t).toString(16).padStart(2,'0');return '#'+c(1)+c(3)+c(5);}
+function arcPos(a){const r=a*Math.PI/180;return [960+620*Math.cos(r), 640-420*Math.sin(r)];}
+function apply(){
+  { const u=Math.max(0,Math.min(1,st.u)); const R=1250*Math.pow(1-u,0.8); const phi=(60-650*u)*Math.PI/180;
+    st.mx=DOTX+R*0.42*Math.cos(phi); st.my=DOTY+R*0.5*Math.sin(phi)+st.ey;
+    st.mr=DOTR+(240-DOTR)*Math.pow(1-u,1.2);
+    st.shx=-40*Math.cos(phi+Math.PI/2); st.shy=40*Math.sin(-phi+Math.PI/2)+14; }
+  const dark=document.body.classList.contains('dark');
+  $('#paper').setAttribute('fill', dark? lerpColor('#020108','#06040E',st.paper) : lerpColor('#E3D5BC','#F3EADA',st.paper));
+  $('#moon').setAttribute('transform',`translate(${st.mx},${st.my}) scale(${st.sx*st.pulse},${st.sy*st.pulse})`);
+  $('#moonBody').setAttribute('r',st.mr); $('#mc').setAttribute('r',st.mr);
+  $('#moonRings').setAttribute('transform',`scale(${st.mr/240})`); $('#moonRings').setAttribute('opacity',st.ringsO);
+  // shading: an ink crescent = moon minus an offset copy; drawn as a big dark circle clipped to the moon, offset
+  $('#cresA').setAttribute('r',st.mr); $('#shadeC').setAttribute('opacity',st.shO); $('#hatchG').setAttribute('transform',`scale(${(st.mr/240).toFixed(3)})`);
+  $('#litC').setAttribute('r',st.mr); $('#litC').setAttribute('transform',`translate(${(-st.shx*st.mr/240).toFixed(2)},${(-st.shy*st.mr/240).toFixed(2)})`);
+  $('#mb').setAttribute('stdDeviation',`0 ${st.blur}`);
+  $('#frame').setAttribute('stroke-dashoffset',st.frame);
+  if(!BB) BB=[...Array(NL)].map((_,i)=>$('#Lt'+i).getBBox());
+  L.forEach((l,i)=>{const b=BB[i]; const q=Math.max(0,Math.min(1,l.p)); $('#lr'+i).setAttribute('x',b.x-3); $('#lr'+i).setAttribute('width',(b.width+6)*q); $('#Lt'+i).setAttribute('transform',`translate(0,${(3.5*(1-q)).toFixed(2)})`);});
+  const x2=500+st.wipe2*130; $('#wipePoly2').setAttribute('points',`500,-20 ${x2},-20 ${x2},200 500,200`);
+  $('#ltdT').setAttribute('transform',`translate(0,${st.ly}) rotate(${st.rot} 532 100)`);
+  $('#ring').setAttribute('r',st.ringR); $('#ring').setAttribute('opacity',st.ringO);
+}
+const tl=gsap.timeline({paused:true,onUpdate:apply});
+// one continuous inward spiral: enters bottom-right, rises, over the top, down the left, keeps turning into the dot
+tl.to(st,{u:1,duration:3.1,ease:'power1.inOut'},0)
+  .to(st,{ey:0,duration:.7,ease:'power2.out'},0)
+  .to(st,{blur:5,duration:.3},0).to(st,{blur:0,duration:.8,ease:'power1.out'},.4)
+  .set(st,{shO:.85},0)
+  .to(st,{paper:1,duration:1.6,ease:'power1.inOut'},.1)
+  .to(st,{shO:0,ringsO:0,duration:.5,ease:'power2.in'},2.0)
+  .to(st,{sx:1.25,sy:.78,duration:.06},3.1).to(st,{sx:.95,sy:1.05,duration:.1},3.16).to(st,{sx:1,sy:1,duration:.16,ease:'power2.out'},3.26)
+  // LTD tilts in, wobbles, settles
+  .set(st,{rot:-14,ly:8},3.25).to(st,{wipe2:1,duration:.22,ease:'power2.out'},3.25)
+  .to(st,{rot:0,ly:0,duration:.95,ease:'elastic.out(1.4,0.2)'},3.32)
+  // pulse as the wobble dies
+  .to(st,{pulse:1.16,duration:.14,ease:'power2.out'},4.25).to(st,{pulse:1,duration:.26,ease:'power2.inOut'},4.39)
+  .set(st,{ringR:7.25,ringO:.65},4.27).to(st,{ringR:48,ringO:0,duration:.75,ease:'power2.out'},4.27)
+  .to({},{duration:.01},5.1);
+// 2) letters: pen-like stagger while the moon is up (1.05 -> 1.95)
+const ORDER=[...Array(NL).keys()].sort((a,b)=>$('#Lt'+a).getBBox().x-$('#Lt'+b).getBBox().x);
+ORDER.forEach((i,k)=>tl.to(L[i],{p:1,duration:.40,ease:'power2.out'},1.05+k*0.072));
+const seek=t=>{ tl.seek(t,false); apply(); };
+
+    const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+    if(reduce){ seek(5.1); return; }
+    const play=()=>{ tl.pause(0); apply(); tl.play(); };
+    play(); stage.addEventListener('click',play);
+  }
+  if(window.gsap) run(); else { const s=document.createElement('script'); s.src='https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js'; s.onload=run; document.head.appendChild(s); }
+})();
+</script>
