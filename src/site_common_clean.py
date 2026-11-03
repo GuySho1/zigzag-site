@@ -13,6 +13,6 @@ def clean_urls(s):
         url = url.lstrip('/')
         url = '' if url == 'index.html' else url[:-5]
         return f'{attr}="{pre}/{url}{frag}"'
-    s = re.sub(r'\b(href|content)="((?:https://zigzagmedia\.co\.il/)?[^"#:]*?\.html)(#[^"]*)?"', fix, s)
+    s = re.sub(r'\b(href|content|data-thanks)="((?:https://zigzagmedia\.co\.il/)?[^"#:]*?\.html)(#[^"]*)?"', fix, s)
     s = re.sub(r'https://zigzagmedia\.co\.il/((?:[\w\-/]+?))\.html(?=["\s<)]|$)', lambda m: SITE_ROOT + '/' + ('' if m.group(1) == 'index' else m.group(1)), s)
     return s
