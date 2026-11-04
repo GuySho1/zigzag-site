@@ -29,10 +29,10 @@ def rel(s, depth):
     s = s.replace('href="#main"', 'href="#MAIN"').replace('href="#top"', f'href="{pre}index.html"')
     s = re.sub(r'href="#([a-z\-]+)"', lambda m: f'href="{pre}index.html#{m.group(1)}"', s)
     s = s.replace('href="#MAIN"', 'href="#main"')
-    for f in ('agents.html', 'knowledge.html', 'accessibility.html', 'llms.txt', 'apple-touch-icon.png', 'favicon.svg', 'favicon-32.png', 'og.jpg'):
+    for f in ('agents.html', 'knowledge.html', 'accessibility.html', 'services.html', 'llms.txt', 'apple-touch-icon.png', 'favicon.svg', 'favicon-32.png', 'og.jpg'):
         s = s.replace(f'href="{f}"', f'href="{pre}{f}"')
     s = s.replace('src="art/', f'src="{pre}art/').replace('href="art/', f'href="{pre}art/').replace('content="og.jpg', f'content="{pre}og.jpg')
-    s = s.replace('url(fonts/', f'url({pre}fonts/').replace('href="fonts/', f'href="{pre}fonts/')
+    s = s.replace('url(fonts/', f'url({pre}fonts/').replace('href="fonts/', f'href="{pre}fonts/').replace('href="services/', f'href="{pre}services/')
     return s
 
 EXTRA_CSS = '''<style>
