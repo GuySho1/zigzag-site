@@ -9,14 +9,23 @@
 <meta property="og:description" content="לפני שמוציאים שקל על פרסום: פיקסל, אירועי המרה, Conversions API, גוגל אנליטיקס 4 ותג מנג&#x27;ר. תשתית חזקה = נתונים אמיתיים = החלטות נכונות.">
 <meta property="og:image" content="https://zigzagmedia.co.il/og.jpg">
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
-<meta property="og:type" content="website"><meta property="og:locale" content="he_IL"><meta name="twitter:card" content="summary_large_image">
+<meta property="og:type" content="article"><meta property="og:locale" content="he_IL"><meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://zigzagmedia.co.il/articles/infrastructure-before-everything">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml"><link rel="icon" href="../favicon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="../apple-touch-icon.png"><meta name="theme-color" content="#F3EADA">
 <link rel="alternate" type="text/plain" href="../llms.txt" title="LLM summary">
 <link rel="alternate" type="text/html" href="/agents" title="מידע מסודר לסוכני AI">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;900&display=swap">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../fonts/heebo-hebrew-400-normal.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../fonts/heebo-hebrew-900-normal.woff2">
+<style>
+@font-face{font-family:Heebo;font-style:normal;font-weight:400;font-display:swap;src:url(../fonts/heebo-hebrew-400-normal.woff2) format('woff2');unicode-range:U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F}
+@font-face{font-family:Heebo;font-style:normal;font-weight:500;font-display:swap;src:url(../fonts/heebo-hebrew-500-normal.woff2) format('woff2');unicode-range:U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F}
+@font-face{font-family:Heebo;font-style:normal;font-weight:700;font-display:swap;src:url(../fonts/heebo-hebrew-700-normal.woff2) format('woff2');unicode-range:U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F}
+@font-face{font-family:Heebo;font-style:normal;font-weight:900;font-display:swap;src:url(../fonts/heebo-hebrew-900-normal.woff2) format('woff2');unicode-range:U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F}
+@font-face{font-family:Heebo;font-style:normal;font-weight:400;font-display:swap;src:url(../fonts/heebo-latin-400-normal.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:Heebo;font-style:normal;font-weight:500;font-display:swap;src:url(../fonts/heebo-latin-500-normal.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:Heebo;font-style:normal;font-weight:700;font-display:swap;src:url(../fonts/heebo-latin-700-normal.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:Heebo;font-style:normal;font-weight:900;font-display:swap;src:url(../fonts/heebo-latin-900-normal.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+</style>
 <style>
 :root{--bg:#F3EADA;--bg2:#FBF6EC;--fg:#0A061B;--line:#0A061B;--dim:#5E5873;--navbg:#F3EADA;--err:#B3261E;--inputbg:#fff;--footbg:#0A061B;color-scheme:light;--ink:#0A061B;--moon:#8526FD;--moonD:#5B14C4;--font:'Heebo',system-ui,sans-serif}
 *{box-sizing:border-box}
@@ -222,6 +231,15 @@ footer .bottom{display:flex;flex-wrap:wrap;gap:6px 28px;align-items:center;justi
 footer .bottom a{min-height:44px;color:#B9B0D6;font-weight:400}
 @media (max-width:899px){footer{padding-top:52px;font-size:15px}footer::before{width:260px;height:260px;left:-100px;bottom:-130px}footer .top{grid-template-columns:1fr 1fr;gap:22px 18px;margin-bottom:26px}footer .brand,footer .contact{grid-column:1/-1}footer .brand .logo{height:26px;margin-bottom:12px}footer .motto{font-size:22px;max-width:none}footer h3{margin-bottom:4px}footer a{min-height:44px}footer .contact ul{display:flex;flex-wrap:wrap;gap:2px 20px}footer .contact .wa{width:100%;justify-content:center;margin-top:12px}footer .bottom{flex-direction:column;align-items:flex-start;gap:0}}
 .form .alt a{display:inline-flex;align-items:center;min-height:44px;color:var(--moon);font-weight:700}
+
+/* home teaser of the knowledge section */
+.teaser .tgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:26px}
+.tcard{display:block;background:var(--bg2);border:3px solid var(--line);padding:22px 24px;text-decoration:none;color:inherit;position:relative}
+.tcard::before{content:'';position:absolute;top:0;right:0;width:46px;height:5px;background:var(--moon)}
+.tcard h3{font-size:clamp(20px,2.2vw,26px);margin:8px 0 8px;line-height:1.25}
+.tcard p{margin:0;color:var(--dim);font-size:16px}
+.tcard .more{display:inline-block;margin-top:14px;font-weight:700;color:var(--moon)}
+@media (max-width:899px){.teaser .tgrid{grid-template-columns:1fr}}
 /* reveal */
 html.gsap .rv{opacity:0;transform:translateY(22px)}
 @media (prefers-reduced-motion:reduce){html.gsap .rv{opacity:1;transform:none}}
@@ -308,7 +326,7 @@ oaiq("init",{pixelId:"CbBgBJtt4xhQJgymGrK5Ys"});oaiq("measure","page_viewed",{ty
 .hub .list.plain .item h2{font-size:22px;margin:4px 0 6px}
 .hub .list.plain .item p{margin:0}
 .hub .list.plain .item .meta{margin-top:6px}
-</style><script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "תשתית לפני הכול: למה Business Manager מסודר שווה יותר מקמפיין מושקע", "description": "לפני שמוציאים שקל על פרסום: פיקסל, אירועי המרה, Conversions API, גוגל אנליטיקס 4 ותג מנג'ר. תשתית חזקה = נתונים אמיתיים = החלטות נכונות.", "datePublished": "2026-02-01", "inLanguage": "he", "author": {"@type": "Person", "name": "גיא שושני"}, "publisher": {"@type": "Organization", "name": "Z.G Digital (ז.ג דיגיטל)", "url": "https://zigzagmedia.co.il"}, "mainEntityOfPage": "https://zigzagmedia.co.il/articles/infrastructure-before-everything", "articleSection": "תשתית ודאטה"}</script></head>
+</style><script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "תשתית לפני הכול: למה Business Manager מסודר שווה יותר מקמפיין מושקע", "description": "לפני שמוציאים שקל על פרסום: פיקסל, אירועי המרה, Conversions API, גוגל אנליטיקס 4 ותג מנג'ר. תשתית חזקה = נתונים אמיתיים = החלטות נכונות.", "datePublished": "2026-02-01", "dateModified": "2026-02-01", "inLanguage": "he", "author": {"@type": "Person", "name": "גיא שושני"}, "publisher": {"@type": "Organization", "name": "Z.G Digital (ז.ג דיגיטל)", "url": "https://zigzagmedia.co.il"}, "mainEntityOfPage": "https://zigzagmedia.co.il/articles/infrastructure-before-everything", "articleSection": "תשתית ודאטה"}</script></head>
 <body>
 <a class="skip" href="#main">דלג לתוכן</a>
 <nav class="nav" aria-label="ראשי">

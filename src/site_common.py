@@ -32,6 +32,7 @@ def rel(s, depth):
     for f in ('agents.html', 'knowledge.html', 'accessibility.html', 'llms.txt', 'apple-touch-icon.png', 'favicon.svg', 'favicon-32.png', 'og.jpg'):
         s = s.replace(f'href="{f}"', f'href="{pre}{f}"')
     s = s.replace('src="art/', f'src="{pre}art/').replace('href="art/', f'href="{pre}art/').replace('content="og.jpg', f'content="{pre}og.jpg')
+    s = s.replace('url(fonts/', f'url({pre}fonts/').replace('href="fonts/', f'href="{pre}fonts/')
     return s
 
 EXTRA_CSS = '''<style>
@@ -60,17 +61,22 @@ EXTRA_CSS = '''<style>
 <script>document.addEventListener('DOMContentLoaded',()=>{const nav=document.querySelector('.nav');let last=scrollY;addEventListener('scroll',()=>{const y=scrollY;if(!matchMedia('(max-width:899px)').matches){nav.classList.remove('away');last=y;return;}if(y>last+8&&y>140)nav.classList.add('away');else if(y<last-8||y<80)nav.classList.remove('away');last=y;},{passive:true});});</script>
 '''
 
-def page(path, title, desc, body, depth=0, extra_head='', canonical=None):
+def page(path, title, desc, body, depth=0, extra_head='', canonical=None, og_image=None, og_type=None):
     h = head
     h = re.sub(r'<title>.*?</title>', f'<title>{H.escape(title)}</title>', h, flags=re.S)
     h = re.sub(r'<meta name="description" content="[^"]*">', f'<meta name="description" content="{H.escape(desc, quote=True)}">', h)
     h = re.sub(r'<meta property="og:title" content="[^"]*">', f'<meta property="og:title" content="{H.escape(title, quote=True)}">', h)
     h = re.sub(r'<meta property="og:description" content="[^"]*">', f'<meta property="og:description" content="{H.escape(desc, quote=True)}">', h)
     h = re.sub(r'<link rel="canonical" href="[^"]*">', f'<link rel="canonical" href="https://zigzagmedia.co.il/{canonical or path}">', h)
+    if og_image:
+        h = re.sub(r'<meta property="og:image" content="[^"]*">', f'<meta property="og:image" content="{og_image}">', h)
+        h = re.sub(r'<meta property="og:image:width" content="\d+"><meta property="og:image:height" content="\d+">', '', h)
+    if og_type: h = h.replace('<meta property="og:type" content="website">', f'<meta property="og:type" content="{og_type}">')
     h = h.replace('</head>', EXTRA_CSS + extra_head + '</head>')
     out = f'<!doctype html>\n<html lang="he" dir="rtl">\n{rel(h, depth)}\n<body>\n{rel(nav, depth)}\n<main id="main">\n{body}\n</main>\n{rel(footer, depth)}\n</body></html>'
     if path == '404.html':
         out = re.sub(r'(href|src|content)="(?!https?:|/|#|mailto:|tel:|data:)([^"]+)"', r'\1="/\2"', out)
+        out = out.replace('url(fonts/', 'url(/fonts/')
     out = clean_urls(out)
     os.makedirs(os.path.dirname(path) or '.', exist_ok=True)
     open(path, 'w', encoding='utf-8').write(out)

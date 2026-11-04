@@ -13,6 +13,7 @@
 #   video: videos/meta-mcp-16x9.mp4          (אופציונלי: הסרטון הקצר, יחסית לשורש האתר)
 #   poster: videos/meta-mcp-poster.jpg       (אופציונלי: תמונת פתיחה לסרטון)
 #   cover: art/cat.jpg                       (אופציונלי: תמונה לכרטיס בדף הידע)
+#   updated: 2026-11-04                       (אופציונלי: תאריך עדכון אחרון; מופיע במאמר וב-JSON-LD)
 #   cta: רוצים שנבנה לכם את זה? | index.html#contact   (אופציונלי: טקסט | קישור)
 #   draft: true                              (אופציונלי: לא נבנה ולא נכנס למפת האתר)
 #   ---
@@ -42,6 +43,11 @@ def parse(path):
     meta['read'] = int(meta.get('read') or max(2, round(len(meta['body_md'].split()) / 180)))
     meta['draft'] = meta.get('draft', '').lower() in ('true', '1', 'yes', 'כן')
     return meta
+
+def share_img(path):
+    # previews in WhatsApp/Facebook are safer with JPG; use it when a JPG twin of the WebP exists
+    j = path[:-5] + '.jpg' if path.endswith('.webp') else path
+    return j if os.path.exists(j) else path
 
 def heb_date(iso):
     y, mo, d = iso.split('-')
@@ -118,7 +124,7 @@ for i, a in enumerate(ARTS):
     if a.get('cta') and '|' in a['cta']:
         cta_t, cta_h = [x.strip() for x in a['cta'].split('|', 1)]
         if not cta_h.startswith(('http', '../', '#')): cta_h = '../' + cta_h
-    ld = {"@context": "https://schema.org", "@type": "Article", "headline": a['title'], "description": a['desc'], "datePublished": a['date'], "inLanguage": "he",
+    ld = {"@context": "https://schema.org", "@type": "Article", "headline": a['title'], "description": a['desc'], "datePublished": a['date'], "dateModified": a.get('updated') or a['date'], "inLanguage": "he", **({"image": f"{SITE}/{share_img(a['cover'])}"} if a.get('cover') else {}),
           "author": {"@type": "Person", "name": "גיא שושני"}, "publisher": {"@type": "Organization", "name": "Z.G Digital (ז.ג דיגיטל)", "url": SITE},
           "mainEntityOfPage": f"{SITE}/articles/{a['slug']}.html", "articleSection": a['cat']}
     if a.get('video'):
@@ -126,7 +132,7 @@ for i, a in enumerate(ARTS):
     body = f'''<article class="sec page post"><div class="wrap narrow">
   <p class="eyebrow">{ep}{H.escape(a['cat'])}{tool}</p>
   <h1>{H.escape(a['title'])}</h1>
-  <p class="meta">גיא שושני · {heb_date(a['date'])} · {a['read']} דקות קריאה</p>
+  <p class="meta">גיא שושני · {heb_date(a['date'])}{(' · עודכן ' + heb_date(a['updated'])) if a.get('updated') else ''} · {a['read']} דקות קריאה</p>
   {video}
   <p class="sum"><b>בקצרה:</b> {H.escape(a['desc'])}</p>
   {md(a['body_md'])}
@@ -134,13 +140,14 @@ for i, a in enumerate(ARTS):
   <div class="more"><h2>עוד בנושא</h2><ul>{more}</ul></div>
 </div></article>'''
     page(f'articles/{a["slug"]}.html', a['title'] + ' · Z.G Digital', a['desc'], body, depth=1,
-         extra_head=CONTENT_CSS + '<script type="application/ld+json">' + json.dumps(ld, ensure_ascii=False) + '</script>')
+         extra_head=CONTENT_CSS + '<script type="application/ld+json">' + json.dumps(ld, ensure_ascii=False) + '</script>',
+         og_image=(f"{SITE}/{share_img(a['cover'])}" if a.get('cover') else None), og_type='article')
 
 # ---------------- knowledge hub ----------------
 def card(a, cover=True):
     cov = ''
     if cover and a.get('cover'):
-        cov = f'<div class="cov"><img src="{a["cover"]}" alt="" loading="lazy" width="960" height="540"></div>'
+        cov = f'<div class="cov"><img src="{a["cover"]}" alt="{H.escape(a["title"], quote=True)}" loading="lazy" width="960" height="540"></div>'
     ep = ''
     return (f'<a class="item" href="articles/{a["slug"]}.html" data-cat="{H.escape(a["cat"], quote=True)}">{cov}<div class="txt">'
             f'<p class="eyebrow">{ep}{H.escape(a["cat"])}</p><h2>{H.escape(a["title"])}</h2><p>{H.escape(a["desc"])}</p>'

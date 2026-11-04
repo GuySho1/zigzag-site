@@ -8,15 +8,37 @@ PHONE_INTL='972525649801'; PHONE_LOCAL='052-5649801'; WA=f'https://wa.me/{PHONE_
 PLATFORMS=['מטא','גוגל','יוטיוב','טיקטוק','צ׳אט ג׳י־פי־טי','טאבולה','אאוטבריין']
 PLATFORMS_LONG=['מטא (פייסבוק ואינסטגרם)','גוגל','יוטיוב','טיקטוק',"צ'אט ג'י־פי־טי",'טאבולה','אאוטבריין']
 
+SOCIAL = [u for u in [
+  '',   # לינקדאין (דף החברה או הפרופיל של גיא)
+  '',   # אינסטגרם
+  '',   # פייסבוק
+] if u]
 LD_ORG = {"@context":"https://schema.org","@type":"ProfessionalService","name":"Z.G Digital (זיגזג מדיה)","alternateName":"ז.ג דיגיטל בע\"מ",
  "url":"https://zigzagmedia.co.il","email":MAIL,"telephone":"+"+PHONE_INTL,"areaServed":"IL",
  "address":{"@type":"PostalAddress","addressLocality":"תל אביב","addressCountry":"IL"},
- "founder":{"@type":"Person","name":"גיא שושני"},
+ "founder":{"@type":"Person","name":"גיא שושני"}, **({"sameAs":SOCIAL} if SOCIAL else {}),
  "knowsAbout":["Performance marketing","Meta Ads","Google Ads","YouTube Ads","TikTok Ads","ChatGPT Ads","Taboola","Outbrain","Creative team management","Generative AI","Business automation","Landing pages"],
  "makesOffer":[
   {"@type":"Offer","itemOffered":{"@type":"Service","name":"פרפורמנס בכל הפלטפורמות","description":"ניהול תקציבי פרסום בכל הגדלים ולכל המטרות: לידים, מכירות וניהול מוניטין. "+", ".join(PLATFORMS_LONG)}},
   {"@type":"Offer","itemOffered":{"@type":"Service","name":"ניהול והפעלת צוותי קריאייטיב","description":"הכוונה ועבודה בפועל מול צוות יצירת התוכן של הלקוח, מהבריף ועד המודעה שעולה לאוויר"}},
   {"@type":"Offer","itemOffered":{"@type":"Service","name":"פתרונות בינה מלאכותית","description":"דפי נחיתה ואתרים, אוטומציות עסקיות ותוכן גנרטיבי"}}]}
+
+
+# ---- latest articles for the home-page teaser (front matter only) ----
+def _arts():
+    out=[]
+    for f in sorted(os.listdir('/home/claude/site/calm/content/articles')):
+        if not f.endswith('.md'): continue
+        raw=open('/home/claude/site/calm/content/articles/'+f,encoding='utf-8').read()
+        m=re.match(r'---\n(.*?)\n---',raw,re.S); meta={}
+        for line in m.group(1).splitlines():
+            if ':' in line: k,v=line.split(':',1); meta[k.strip()]=v.strip()
+        if meta.get('draft','').lower() in ('true','1','yes','כן'): continue
+        meta['slug']=f[:-3]; out.append(meta)
+    out.sort(key=lambda a:(a.get('episode') is not None, a.get('date',''), int(a.get('episode') or 0)), reverse=True)
+    return out
+import html as _H
+TEASER=''.join(f'<a class="tcard rv" href="articles/{a["slug"]}.html"><span class="eyebrow">{_H.escape(a["cat"])}</span><h3>{_H.escape(a["title"])}</h3><p>{_H.escape(a["desc"])}</p><span class="more">לקריאה ←</span></a>' for a in _arts()[:2])
 
 html = r'''<!doctype html>
 <html lang="he" dir="rtl">
@@ -34,9 +56,18 @@ html = r'''<!doctype html>
 <link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="theme-color" content="#F3EADA">
 <link rel="alternate" type="text/plain" href="llms.txt" title="LLM summary">
 <link rel="alternate" type="text/html" href="agents.html" title="מידע מסודר לסוכני AI">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;900&display=swap">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="fonts/heebo-hebrew-400-normal.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="fonts/heebo-hebrew-900-normal.woff2">
+<style>
+@font-face{font-family:Heebo;font-style:normal;font-weight:400;font-display:swap;src:url(fonts/heebo-hebrew-400-normal.woff2) format('woff2');unicode-range:U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F}
+@font-face{font-family:Heebo;font-style:normal;font-weight:500;font-display:swap;src:url(fonts/heebo-hebrew-500-normal.woff2) format('woff2');unicode-range:U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F}
+@font-face{font-family:Heebo;font-style:normal;font-weight:700;font-display:swap;src:url(fonts/heebo-hebrew-700-normal.woff2) format('woff2');unicode-range:U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F}
+@font-face{font-family:Heebo;font-style:normal;font-weight:900;font-display:swap;src:url(fonts/heebo-hebrew-900-normal.woff2) format('woff2');unicode-range:U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F}
+@font-face{font-family:Heebo;font-style:normal;font-weight:400;font-display:swap;src:url(fonts/heebo-latin-400-normal.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:Heebo;font-style:normal;font-weight:500;font-display:swap;src:url(fonts/heebo-latin-500-normal.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:Heebo;font-style:normal;font-weight:700;font-display:swap;src:url(fonts/heebo-latin-700-normal.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:Heebo;font-style:normal;font-weight:900;font-display:swap;src:url(fonts/heebo-latin-900-normal.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+</style>
 <style>
 :root{__VARS__--ink:#0A061B;--moon:#8526FD;--moonD:#5B14C4;--font:'Heebo',system-ui,sans-serif}
 *{box-sizing:border-box}
@@ -242,6 +273,15 @@ footer .bottom{display:flex;flex-wrap:wrap;gap:6px 28px;align-items:center;justi
 footer .bottom a{min-height:44px;color:#B9B0D6;font-weight:400}
 @media (max-width:899px){footer{padding-top:52px;font-size:15px}footer::before{width:260px;height:260px;left:-100px;bottom:-130px}footer .top{grid-template-columns:1fr 1fr;gap:22px 18px;margin-bottom:26px}footer .brand,footer .contact{grid-column:1/-1}footer .brand .logo{height:26px;margin-bottom:12px}footer .motto{font-size:22px;max-width:none}footer h3{margin-bottom:4px}footer a{min-height:44px}footer .contact ul{display:flex;flex-wrap:wrap;gap:2px 20px}footer .contact .wa{width:100%;justify-content:center;margin-top:12px}footer .bottom{flex-direction:column;align-items:flex-start;gap:0}}
 .form .alt a{display:inline-flex;align-items:center;min-height:44px;color:var(--moon);font-weight:700}
+
+/* home teaser of the knowledge section */
+.teaser .tgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:26px}
+.tcard{display:block;background:var(--bg2);border:3px solid var(--line);padding:22px 24px;text-decoration:none;color:inherit;position:relative}
+.tcard::before{content:'';position:absolute;top:0;right:0;width:46px;height:5px;background:var(--moon)}
+.tcard h3{font-size:clamp(20px,2.2vw,26px);margin:8px 0 8px;line-height:1.25}
+.tcard p{margin:0;color:var(--dim);font-size:16px}
+.tcard .more{display:inline-block;margin-top:14px;font-weight:700;color:var(--moon)}
+@media (max-width:899px){.teaser .tgrid{grid-template-columns:1fr}}
 /* reveal */
 html.gsap .rv{opacity:0;transform:translateY(22px)}
 @media (prefers-reduced-motion:reduce){html.gsap .rv{opacity:1;transform:none}}
@@ -380,6 +420,15 @@ oaiq("init",{pixelId:"CbBgBJtt4xhQJgymGrK5Ys"});oaiq("measure","page_viewed",{ty
       </article>
     </div>
     <div class="arrows only-m"><button type="button" class="arr prev" aria-label="השירות הקודם">→</button><span class="count" id="count" aria-live="polite">1 מתוך 3</span><button type="button" class="arr next" aria-label="השירות הבא">←</button></div>
+  </div>
+</section>
+
+<section class="sec teaser" id="knowledge">
+  <div class="wrap">
+    <p class="eyebrow rv">מידע שימושי</p>
+    <h2 class="rv">כלים שאנחנו באמת עובדים איתם, ואיך מחברים אותם</h2>
+    <div class="tgrid">__TEASER__</div>
+    <p class="rv" style="margin-top:22px"><a class="link" href="knowledge.html">לכל המאמרים ←</a></p>
   </div>
 </section>
 
@@ -561,7 +610,7 @@ if THEME=='dark':
     html = html.replace('__CANVAS_HERO__','<canvas id="mist" class="full" aria-hidden="true"></canvas>').replace('__CANVAS_ART__','').replace('__FS__',FS_MIST)
 else:
     html = html.replace('__CANVAS_HERO__','').replace('__CANVAS_ART__','<canvas id="mist" class="ink" aria-hidden="true"></canvas>').replace('__FS__',FS_INK)
-html = html.replace('__VARS__',VARS).replace('__MAN__',MAN).replace('__FG__',FG).replace('__SHADER_BG__',SH_BG).replace('__MIX__',MIX).replace('__HI__',HI).replace('__PARTICLES__',PART)
+html = html.replace('__TEASER__',TEASER).replace('__VARS__',VARS).replace('__MAN__',MAN).replace('__FG__',FG).replace('__SHADER_BG__',SH_BG).replace('__MIX__',MIX).replace('__HI__',HI).replace('__PARTICLES__',PART)
 OUT = '/home/claude/site/calm/dark.html' if THEME=='dark' else '/home/claude/site/calm/index.html'
 if THEME=='dark': html = html.replace('<link rel="canonical" href="https://zigzagmedia.co.il/">','<meta name="robots" content="noindex">')
 out = (html.replace('__LOGO_CREAM__',LOGO_CREAM).replace('__LOGO__',LOGO_NAV).replace('__WA__',WA).replace('__PL__',PHONE_LOCAL).replace('__MAIL__',MAIL).replace('__PHONE_INTL__',PHONE_INTL)
