@@ -13,6 +13,7 @@
 #   video: videos/meta-mcp-16x9.mp4          (אופציונלי: הסרטון הקצר, יחסית לשורש האתר)
 #   poster: videos/meta-mcp-poster.jpg       (אופציונלי: תמונת פתיחה לסרטון)
 #   cover: art/cat.jpg                       (אופציונלי: תמונה לכרטיס בדף הידע)
+#   seo_title: כותרת לגוגל ולשיתוף (אופציונלי; הכותרת בעמוד נשארת title)
 #   updated: 2026-11-04                       (אופציונלי: תאריך עדכון אחרון; מופיע במאמר וב-JSON-LD)
 #   cta: רוצים שנבנה לכם את זה? | index.html#contact   (אופציונלי: טקסט | קישור)
 #   draft: true                              (אופציונלי: לא נבנה ולא נכנס למפת האתר)
@@ -139,7 +140,7 @@ for i, a in enumerate(ARTS):
   <div class="cta"><a class="btn" href="{cta_h}">{H.escape(cta_t)}</a><a class="link" href="../knowledge.html">לכל המאמרים</a></div>
   <div class="more"><h2>עוד בנושא</h2><ul>{more}</ul></div>
 </div></article>'''
-    page(f'articles/{a["slug"]}.html', a['title'] + ' · Z.G Digital', a['desc'], body, depth=1,
+    page(f'articles/{a["slug"]}.html', (a.get('seo_title') or a['title']) + ' · Z.G Digital', a['desc'], body, depth=1,
          extra_head=CONTENT_CSS + '<script type="application/ld+json">' + json.dumps(ld, ensure_ascii=False) + '</script>',
          og_image=(f"{SITE}/{share_img(a['cover'])}" if a.get('cover') else None), og_type='article')
 
