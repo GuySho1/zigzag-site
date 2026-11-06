@@ -240,6 +240,8 @@ footer .bottom a{min-height:44px;color:#B9B0D6;font-weight:400}
 .tcard p{margin:0;color:var(--dim);font-size:16px}
 .tcard .more{display:inline-block;margin-top:14px;font-weight:700;color:var(--moon)}
 @media (max-width:899px){.teaser .tgrid{grid-template-columns:1fr}}
+.svclinks{display:flex;flex-wrap:wrap;gap:6px 22px;margin-top:14px}
+.svclinks a{min-height:44px;display:inline-flex;align-items:center;font-weight:700;color:var(--moon);text-decoration:none}
 /* reveal */
 html.gsap .rv{opacity:0;transform:translateY(22px)}
 @media (prefers-reduced-motion:reduce){html.gsap .rv{opacity:1;transform:none}}
@@ -362,7 +364,7 @@ oaiq("init",{pixelId:"CbBgBJtt4xhQJgymGrK5Ys"});oaiq("measure","page_viewed",{ty
             <div class="goal"><b>מכירות</b><p>חנויות ומוצרים: קטלוגים, רימרקטינג וחשבון שיודע כמה רווח יש על כל מכירה.</p></div>
             <div class="goal"><b>מוניטין</b><p>כשצריך שהשם שלכם יופיע נכון, במקום הנכון, לאנשים הנכונים, גם כשלא קל.</p></div>
           </div>
-        </div>
+                  </div>
         <div class="pstack">
           <figure class="frame rv"><div class="pic" data-par="5"><picture><source type="image/webp" srcset="art/w/ayalon-480.webp 480w, art/w/ayalon-800.webp 800w, art/w/ayalon-1300.webp 1300w" sizes="(max-width:899px) calc(100vw - 40px), 560px"><img src="art/ayalon.jpg" alt="איור דיו של נתיבי איילון בלילה" loading="lazy" width="1300" height="872"></picture></div></figure>
           <div class="ticker rv" role="marquee" aria-label="הפלטפורמות: מטא, גוגל, יוטיוב, טיקטוק, צ׳אט ג׳י־פי־טי, טאבולה, אאוטבריין"><div><div class="set" aria-hidden="true"><span>מטא</span><span>גוגל</span><span>יוטיוב</span><span>טיקטוק</span><span>צ׳אט ג׳י־פי־טי</span><span>טאבולה</span><span>אאוטבריין</span></div><div class="set" aria-hidden="true"><span>מטא</span><span>גוגל</span><span>יוטיוב</span><span>טיקטוק</span><span>צ׳אט ג׳י־פי־טי</span><span>טאבולה</span><span>אאוטבריין</span></div></div></div>
@@ -374,7 +376,7 @@ oaiq("init",{pixelId:"CbBgBJtt4xhQJgymGrK5Ys"});oaiq("measure","page_viewed",{ty
           <p class="svc rv">ניהול והפעלת צוותי קריאייטיב</p>
           <p class="lead rv">הקמפיין הכי טוב בעולם לא יציל מודעה משעממת. אנחנו מכווינים את צוות התוכן שלכם ועובדים איתו בפועל: מהבריף, דרך הצילום והעריכה, ועד המודעה שעולה לאוויר.</p>
           <p class="rv">יש לכם צוות? נהפוך אותו למכונה שמייצרת קריאייטיב שעובד, עם בריפים שמבוססים על נתונים, לוח הפקות קבוע ובדיקות א/ב כל שבוע. אין לכם צוות? בשביל זה יש <a href="#ai" class="go" data-i="2">פתרונות AI</a>.</p>
-        </div>
+                  </div>
         <figure class="frame tall rv"><div class="pic" data-par="6"><picture><source type="image/webp" srcset="art/w/blvd-480.webp 480w, art/w/blvd-800.webp 800w, art/w/blvd-970.webp 970w" sizes="(max-width:899px) calc(100vw - 40px), 520px"><img src="art/blvd.jpg" alt="איור דיו של שדרות רוטשילד בלילה עם שביל סגול" loading="lazy" width="970" height="1300"></picture></div></figure>
       </article>
       <article class="slide rev" id="ai">
@@ -387,7 +389,7 @@ oaiq("init",{pixelId:"CbBgBJtt4xhQJgymGrK5Ys"});oaiq("measure","page_viewed",{ty
             <div class="card"><h3>אוטומציות עסקיות</h3><p>לידים שמגיעים למקום הנכון, מענה ראשוני מיידי, דוחות שנכתבים לבד. מה שחוזר על עצמו, עובד לבד.</p></div>
             <div class="card"><h3>תוכן גנרטיבי</h3><p>תמונות, סרטונים וטקסטים בשפת המותג שלכם, בכמויות שקמפיין צריך, ובמחיר שאפשר לעמוד בו.</p></div>
           </div>
-        </div>
+                  </div>
         <figure class="frame sq rv"><div class="pic" data-par="5"><picture><source type="image/webp" srcset="art/w/cat-480.webp 480w, art/w/cat-800.webp 800w, art/w/cat-1047.webp 1047w" sizes="(max-width:899px) calc(100vw - 40px), 560px"><img src="art/cat.jpg" alt="איור דיו של חתול על מעקה מול ירח סגול" loading="lazy" width="1300" height="1300"></picture></div></figure>
       </article>
     </div>
@@ -541,14 +543,16 @@ function morpher(el,texts,colors,morph,hold){ const a=el.querySelector('.m1'), b
   Object.keys(F).forEach(k=>{ F[k].addEventListener('blur',()=>check(k)); F[k].addEventListener('input',()=>{ if(F[k].closest('.field').classList.contains('bad')) check(k); }); });
   const btn=f.querySelector('button[type=submit]'), ok=document.getElementById('ok');
   if(!LEAD_ENDPOINT) btn.textContent='שלחו לנו בוואטסאפ';
-  const done=(viaWa)=>{ try{ sessionStorage.setItem('zg_lead','1'); }catch(_){} location.href=(f.dataset.thanks||'thanks.html')+(viaWa?'?via=wa':''); };
+  // מעבר לדף התודה. ליד נמדד רק כשהשרת אישר ושמר (verified=true); וואטסאפ, ספאם וכשל שרת מגיעים לדף בלי סימון ליד.
+  const thanksUrl=(via)=>{ const q=new URLSearchParams(location.search); q.delete('via'); if(via) q.set('via',via); const qs=q.toString(); return (f.dataset.thanks||'thanks.html')+(qs?'?'+qs:''); };
+  const go=(verified,via)=>{ if(verified){ try{ sessionStorage.setItem('zg_lead_verified_v2','1'); }catch(_){} } location.href=thanksUrl(via); };
   const payload=()=>({name:F.name.value.trim(),phone:F.phone.value.trim(),biz:document.getElementById('f-biz').value.trim(),website:document.getElementById('f-web').value,page:location.href});
-  const viaWhatsApp=p=>{ const t=`היי, אני ${p.name}. טלפון: ${p.phone}.${p.biz?' '+p.biz:''} (מהאתר)`; window.open(WA_URL+'?text='+encodeURIComponent(t),'_blank','noopener'); done(true); };
+  const viaWhatsApp=p=>{ const t=`היי, אני ${p.name}. טלפון: ${p.phone}.${p.biz?' '+p.biz:''} (מהאתר)`; window.open(WA_URL+'?text='+encodeURIComponent(t),'_blank','noopener'); go(false,'wa'); };
   f.addEventListener('submit',async e=>{ e.preventDefault(); const bad=Object.keys(F).filter(k=>!check(k)); if(bad.length){ F[bad[0]].focus(); return; }
-    const p=payload(); if(p.website) { done(false); return; }
+    const p=payload(); if(p.website) { go(false,''); return; }  // מלכודת ספאם: בלי שליחה ובלי ליד
     if(!LEAD_ENDPOINT){ viaWhatsApp(p); return; }
     btn.disabled=true; const t0=btn.textContent; btn.textContent='שולחים…';
-    try{ const r=await fetch(LEAD_ENDPOINT,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(p),redirect:'follow'}); const j=await r.json(); if(!j.ok) throw new Error(j.error||'bad'); done(false); }
+    try{ const r=await fetch(LEAD_ENDPOINT,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(p),redirect:'follow'}); const j=await r.json(); if(!(j&&j.ok===true&&j.id)) throw new Error((j&&j.error)||'bad'); go(true,''); }
     catch(err){ btn.disabled=false; btn.textContent=t0; viaWhatsApp(p); } });
 })();
 })();

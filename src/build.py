@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # the calm site: one ordinary scroll, the comic frames as pictures, quiet motion only
 import re, json, os
+SHOW_SVC = os.environ.get('SERVICES', '1') != '0'   # SERVICES=0: בנייה בלי דפי השירות (עד אישור)
 NAV = open('/home/claude/site/frag_nav.html').read()
 LOGO = re.search(r'<svg.*?</svg>', NAV, re.S).group(0).replace('#F0EEFF','#0A061B').replace('#7C3AED','#8526FD').replace('#8C87A3','#6A6480')
 LOGO_CREAM = re.search(r'<svg.*?</svg>', NAV, re.S).group(0).replace('#F0EEFF','#F3EADA').replace('#7C3AED','#8526FD').replace('#8C87A3','#B9B0D6')
@@ -282,6 +283,8 @@ footer .bottom a{min-height:44px;color:#B9B0D6;font-weight:400}
 .tcard p{margin:0;color:var(--dim);font-size:16px}
 .tcard .more{display:inline-block;margin-top:14px;font-weight:700;color:var(--moon)}
 @media (max-width:899px){.teaser .tgrid{grid-template-columns:1fr}}
+.svclinks{display:flex;flex-wrap:wrap;gap:6px 22px;margin-top:14px}
+.svclinks a{min-height:44px;display:inline-flex;align-items:center;font-weight:700;color:var(--moon);text-decoration:none}
 /* reveal */
 html.gsap .rv{opacity:0;transform:translateY(22px)}
 @media (prefers-reduced-motion:reduce){html.gsap .rv{opacity:1;transform:none}}
@@ -390,6 +393,7 @@ oaiq("init",{pixelId:"CbBgBJtt4xhQJgymGrK5Ys"});oaiq("measure","page_viewed",{ty
             <div class="goal"><b>מכירות</b><p>חנויות ומוצרים: קטלוגים, רימרקטינג וחשבון שיודע כמה רווח יש על כל מכירה.</p></div>
             <div class="goal"><b>מוניטין</b><p>כשצריך שהשם שלכם יופיע נכון, במקום הנכון, לאנשים הנכונים, גם כשלא קל.</p></div>
           </div>
+          <p class="rv svclinks"><a class="link" href="services/meta-ads.html">קמפיינים במטא ←</a> <a class="link" href="services/google-ads.html">קמפיינים בגוגל ←</a> <a class="link" href="services/performance.html">תקציבים גדולים ←</a> <a class="link" href="services/chatgpt-ads.html">פרסום בצ'אט ג'יפיטי ←</a></p>
         </div>
         <div class="pstack">
           <figure class="frame rv"><div class="pic" data-par="5"><picture><source type="image/webp" srcset="art/w/ayalon-480.webp 480w, art/w/ayalon-800.webp 800w, art/w/ayalon-1300.webp 1300w" sizes="(max-width:899px) calc(100vw - 40px), 560px"><img src="art/ayalon.jpg" alt="איור דיו של נתיבי איילון בלילה" loading="lazy" width="1300" height="872"></picture></div></figure>
@@ -402,6 +406,7 @@ oaiq("init",{pixelId:"CbBgBJtt4xhQJgymGrK5Ys"});oaiq("measure","page_viewed",{ty
           <p class="svc rv">ניהול והפעלת צוותי קריאייטיב</p>
           <p class="lead rv">הקמפיין הכי טוב בעולם לא יציל מודעה משעממת. אנחנו מכווינים את צוות התוכן שלכם ועובדים איתו בפועל: מהבריף, דרך הצילום והעריכה, ועד המודעה שעולה לאוויר.</p>
           <p class="rv">יש לכם צוות? נהפוך אותו למכונה שמייצרת קריאייטיב שעובד, עם בריפים שמבוססים על נתונים, לוח הפקות קבוע ובדיקות א/ב כל שבוע. אין לכם צוות? בשביל זה יש <a href="#ai" class="go" data-i="2">פתרונות AI</a>.</p>
+          <p class="rv svclinks"><a class="link" href="services/creative.html">איך זה עובד אצלנו ←</a></p>
         </div>
         <figure class="frame tall rv"><div class="pic" data-par="6"><picture><source type="image/webp" srcset="art/w/blvd-480.webp 480w, art/w/blvd-800.webp 800w, art/w/blvd-970.webp 970w" sizes="(max-width:899px) calc(100vw - 40px), 520px"><img src="art/blvd.jpg" alt="איור דיו של שדרות רוטשילד בלילה עם שביל סגול" loading="lazy" width="970" height="1300"></picture></div></figure>
       </article>
@@ -415,6 +420,7 @@ oaiq("init",{pixelId:"CbBgBJtt4xhQJgymGrK5Ys"});oaiq("measure","page_viewed",{ty
             <div class="card"><h3>אוטומציות עסקיות</h3><p>לידים שמגיעים למקום הנכון, מענה ראשוני מיידי, דוחות שנכתבים לבד. מה שחוזר על עצמו, עובד לבד.</p></div>
             <div class="card"><h3>תוכן גנרטיבי</h3><p>תמונות, סרטונים וטקסטים בשפת המותג שלכם, בכמויות שקמפיין צריך, ובמחיר שאפשר לעמוד בו.</p></div>
           </div>
+          <p class="rv svclinks"><a class="link" href="services/ai-for-business.html">סדנאות והכשרות לצוותים ←</a></p>
         </div>
         <figure class="frame sq rv"><div class="pic" data-par="5"><picture><source type="image/webp" srcset="art/w/cat-480.webp 480w, art/w/cat-800.webp 800w, art/w/cat-1047.webp 1047w" sizes="(max-width:899px) calc(100vw - 40px), 560px"><img src="art/cat.jpg" alt="איור דיו של חתול על מעקה מול ירח סגול" loading="lazy" width="1300" height="1300"></picture></div></figure>
       </article>
@@ -463,8 +469,8 @@ oaiq("init",{pixelId:"CbBgBJtt4xhQJgymGrK5Ys"});oaiq("measure","page_viewed",{ty
         <div class="logo">__LOGO_CREAM__</div>
         <p class="motto">עם כוח גדול מגיעה אחריות גדולה, ועם תקציב גדול עוד יותר.</p>
       </div>
-      <nav aria-label="ניווט בפוטר"><h3>באתר</h3><ul><li><a href="#perf">השירותים שלנו</a></li><li><a href="#about">מי אנחנו</a></li><li><a href="#clients">לקוחות</a></li><li><a href="knowledge.html">ידע</a></li><li><a href="#contact">דברו איתנו</a></li></ul></nav>
-      <div><h3>השירותים</h3><ul><li><a href="#perf">פרפורמנס בכל הפלטפורמות</a></li><li><a href="#creative">ניהול צוותי קריאייטיב</a></li><li><a href="#ai">פתרונות בינה מלאכותית</a></li></ul></div>
+      <nav aria-label="ניווט בפוטר"><h3>באתר</h3><ul><li><a href="#perf">השירותים שלנו</a></li><li><a href="#about">מי אנחנו</a></li><li><a href="#clients">לקוחות</a></li><li><a href="services.html">כל השירותים</a></li><li><a href="knowledge.html">ידע</a></li><li><a href="#contact">דברו איתנו</a></li></ul></nav>
+      __SVCFOOT__<div><h3>השירותים</h3><ul><li><a href="services/meta-ads.html">קמפיינים במטא</a></li><li><a href="services/google-ads.html">קמפיינים בגוגל</a></li><li><a href="services/performance.html">פרפורמנס לתקציבים גדולים</a></li><li><a href="services/chatgpt-ads.html">פרסום בצ'אט ג'יפיטי</a></li><li><a href="services/creative.html">קריאייטיב</a></li><li><a href="services/ai-for-business.html">בינה מלאכותית לעסקים</a></li></ul></div>
       <div class="contact"><h3>דברו איתנו</h3><ul><li><a href="mailto:__MAIL__"><bdi>__MAIL__</bdi></a></li><li><a href="tel:+__PHONE_INTL__"><bdi>__PL__</bdi></a></li><li><span>תל אביב, ישראל</span></li></ul><a class="wa" href="__WA__" target="_blank" rel="noopener">וואטסאפ</a></div>
     </div>
     <div class="bottom"><span>© 2026 Z.G Digital Ltd · ז.ג דיגיטל בע"מ</span><a href="accessibility.html">הצהרת נגישות</a><a href="agents.html">מידע מסודר לסוכני AI</a></div>
@@ -538,14 +544,16 @@ function morpher(el,texts,colors,morph,hold){ const a=el.querySelector('.m1'), b
   Object.keys(F).forEach(k=>{ F[k].addEventListener('blur',()=>check(k)); F[k].addEventListener('input',()=>{ if(F[k].closest('.field').classList.contains('bad')) check(k); }); });
   const btn=f.querySelector('button[type=submit]'), ok=document.getElementById('ok');
   if(!LEAD_ENDPOINT) btn.textContent='שלחו לנו בוואטסאפ';
-  const done=(viaWa)=>{ try{ sessionStorage.setItem('zg_lead','1'); }catch(_){} location.href=(f.dataset.thanks||'thanks.html')+(viaWa?'?via=wa':''); };
+  // מעבר לדף התודה. ליד נמדד רק כשהשרת אישר ושמר (verified=true); וואטסאפ, ספאם וכשל שרת מגיעים לדף בלי סימון ליד.
+  const thanksUrl=(via)=>{ const q=new URLSearchParams(location.search); q.delete('via'); if(via) q.set('via',via); const qs=q.toString(); return (f.dataset.thanks||'thanks.html')+(qs?'?'+qs:''); };
+  const go=(verified,via)=>{ if(verified){ try{ sessionStorage.setItem('zg_lead_verified_v2','1'); }catch(_){} } location.href=thanksUrl(via); };
   const payload=()=>({name:F.name.value.trim(),phone:F.phone.value.trim(),biz:document.getElementById('f-biz').value.trim(),website:document.getElementById('f-web').value,page:location.href});
-  const viaWhatsApp=p=>{ const t=`היי, אני ${p.name}. טלפון: ${p.phone}.${p.biz?' '+p.biz:''} (מהאתר)`; window.open(WA_URL+'?text='+encodeURIComponent(t),'_blank','noopener'); done(true); };
+  const viaWhatsApp=p=>{ const t=`היי, אני ${p.name}. טלפון: ${p.phone}.${p.biz?' '+p.biz:''} (מהאתר)`; window.open(WA_URL+'?text='+encodeURIComponent(t),'_blank','noopener'); go(false,'wa'); };
   f.addEventListener('submit',async e=>{ e.preventDefault(); const bad=Object.keys(F).filter(k=>!check(k)); if(bad.length){ F[bad[0]].focus(); return; }
-    const p=payload(); if(p.website) { done(false); return; }
+    const p=payload(); if(p.website) { go(false,''); return; }  // מלכודת ספאם: בלי שליחה ובלי ליד
     if(!LEAD_ENDPOINT){ viaWhatsApp(p); return; }
     btn.disabled=true; const t0=btn.textContent; btn.textContent='שולחים…';
-    try{ const r=await fetch(LEAD_ENDPOINT,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(p),redirect:'follow'}); const j=await r.json(); if(!j.ok) throw new Error(j.error||'bad'); done(false); }
+    try{ const r=await fetch(LEAD_ENDPOINT,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(p),redirect:'follow'}); const j=await r.json(); if(!(j&&j.ok===true&&j.id)) throw new Error((j&&j.error)||'bad'); go(true,''); }
     catch(err){ btn.disabled=false; btn.textContent=t0; viaWhatsApp(p); } });
 })();
 })();
@@ -610,12 +618,16 @@ if THEME=='dark':
     html = html.replace('__CANVAS_HERO__','<canvas id="mist" class="full" aria-hidden="true"></canvas>').replace('__CANVAS_ART__','').replace('__FS__',FS_MIST)
 else:
     html = html.replace('__CANVAS_HERO__','').replace('__CANVAS_ART__','<canvas id="mist" class="ink" aria-hidden="true"></canvas>').replace('__FS__',FS_INK)
-html = html.replace('__TEASER__',TEASER).replace('__VARS__',VARS).replace('__MAN__',MAN).replace('__FG__',FG).replace('__SHADER_BG__',SH_BG).replace('__MIX__',MIX).replace('__HI__',HI).replace('__PARTICLES__',PART)
+html = html.replace('__TEASER__',TEASER).replace('__SVCFOOT__','').replace('__VARS__',VARS).replace('__MAN__',MAN).replace('__FG__',FG).replace('__SHADER_BG__',SH_BG).replace('__MIX__',MIX).replace('__HI__',HI).replace('__PARTICLES__',PART)
 OUT = '/home/claude/site/calm/dark.html' if THEME=='dark' else '/home/claude/site/calm/index.html'
 if THEME=='dark': html = html.replace('<link rel="canonical" href="https://zigzagmedia.co.il/">','<meta name="robots" content="noindex">')
 out = (html.replace('__LOGO_CREAM__',LOGO_CREAM).replace('__LOGO__',LOGO_NAV).replace('__WA__',WA).replace('__PL__',PHONE_LOCAL).replace('__MAIL__',MAIL).replace('__PHONE_INTL__',PHONE_INTL)
         .replace('__LD__','<script type="application/ld+json">'+json.dumps(LD_ORG,ensure_ascii=False)+'</script>')
         .replace('__TICK__',''.join(f'<span>{p}</span>' for p in PLATFORMS)))
+if not SHOW_SVC:
+    out = re.sub(r'<div><h3>השירותים</h3>.*?</div>', '<div><h3>השירותים</h3><ul><li><a href="#perf">פרפורמנס בכל הפלטפורמות</a></li><li><a href="#creative">ניהול צוותי קריאייטיב</a></li><li><a href="#ai">פתרונות בינה מלאכותית</a></li></ul></div>', out, flags=re.S)
+    out = re.sub(r'<p class="rv svclinks">.*?</p>\n?', '', out, flags=re.S)
+    out = out.replace('<li><a href="services.html">כל השירותים</a></li>', '')
 if os.environ.get('CLEAN_URLS') == '1':
     import site_common_clean; out = site_common_clean.clean_urls(out)
 open(OUT,'w').write(out); print('written',THEME,len(out))

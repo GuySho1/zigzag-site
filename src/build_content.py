@@ -176,7 +176,8 @@ page('knowledge.html', 'מידע שימושי · Z.G Digital', 'מידע שימ�
 
 # ---------------- sitemap ----------------
 today = datetime.date.today().isoformat()
-urls = [('/', today), ('/knowledge.html', today)] + [(f'/articles/{a["slug"]}.html', a['date']) for a in ARTS] + [('/accessibility.html', '2026-10-21'), ('/agents.html', '2026-10-21')]
+SVC_SLUGS = sorted(f[:-3] for f in os.listdir('content/services')) if (os.path.isdir('content/services') and os.environ.get('SERVICES','1') != '0') else []
+urls = [('/', today), ('/knowledge.html', today)] + [(f'/articles/{a["slug"]}.html', a['date']) for a in ARTS] + ([('/services.html', '2026-11-04')] + [(f'/services/{x}.html', '2026-11-04') for x in SVC_SLUGS] if SVC_SLUGS else []) + [('/accessibility.html', '2026-10-21'), ('/agents.html', '2026-10-21')]
 open('sitemap.xml', 'w', encoding='utf-8').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
     ''.join(f'  <url><loc>{clean_urls(SITE + u)}</loc><lastmod>{d}</lastmod></url>\n' for u, d in urls) + '</urlset>\n')
 
