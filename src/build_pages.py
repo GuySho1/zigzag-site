@@ -47,13 +47,20 @@ page('thanks.html', 'תודה, קיבלנו · Z.G Digital', 'הפנייה של�
 ''' + MOON_SCRIPT + '''
 <script>
 (function(){
-  if(new URLSearchParams(location.search).get('via')==='wa'){ document.getElementById('thx-lead').hidden=true; document.getElementById('thx-wa').hidden=false; }
-  // מדידת ליד: פעם אחת לכל שליחה (לא ברענון של הדף)
-  var fresh=false; try{ fresh=sessionStorage.getItem('zg_lead')==='1'; if(fresh) sessionStorage.removeItem('zg_lead'); }catch(_){ fresh=true; }
-  if(!fresh) return;
-  try{ if(window.fbq) fbq('track','Lead'); }catch(_){}
-  try{ if(window.oaiq) oaiq("measure","lead_created",{ type: "customer_action" }); }catch(_){}
-  try{ if(window.gtag) gtag('event','generate_lead'); }catch(_){}
+  var via=new URLSearchParams(location.search).get('via');
+  if(via==='wa'){ document.getElementById('thx-lead').hidden=true; document.getElementById('thx-wa').hidden=false; }
+  // ליד נמדד פעם אחת, ורק אחרי שהשרת אישר ושמר את הפנייה (הסימון נכתב בטופס רק במקרה הזה).
+  // רענון, כניסה ישירה, וואטסאפ, ספאם או אחסון חסום: אין ליד.
+  var verified=false; try{ verified=sessionStorage.getItem('zg_lead_verified_v2')==='1'; if(verified) sessionStorage.removeItem('zg_lead_verified_v2'); }catch(_){ verified=false; }
+  if(verified){
+    try{ if(window.fbq) fbq('track','Lead'); }catch(_){}
+    try{ if(window.oaiq) oaiq("measure","lead_created",{ type: "customer_action" }); }catch(_){}
+    try{ if(window.gtag) gtag('event','generate_lead'); }catch(_){}
+  } else if(via==='wa'){
+    // מעבר לוואטסאפ נמדד בנפרד, לא כליד שהתקבל
+    try{ if(window.fbq) fbq('trackCustom','WhatsAppFallback'); }catch(_){}
+    try{ if(window.gtag) gtag('event','whatsapp_fallback'); }catch(_){}
+  }
 })();
 </script>''', extra_head='<meta name="robots" content="noindex">')
 

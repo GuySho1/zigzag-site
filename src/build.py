@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # the calm site: one ordinary scroll, the comic frames as pictures, quiet motion only
 import re, json, os
+SHOW_SVC = os.environ.get('SERVICES', '1') != '0'   # SERVICES=0: בנייה בלי דפי השירות (עד אישור)
 NAV = open('/home/claude/site/frag_nav.html').read()
 LOGO = re.search(r'<svg.*?</svg>', NAV, re.S).group(0).replace('#F0EEFF','#0A061B').replace('#7C3AED','#8526FD').replace('#8C87A3','#6A6480')
 LOGO_CREAM = re.search(r'<svg.*?</svg>', NAV, re.S).group(0).replace('#F0EEFF','#F3EADA').replace('#7C3AED','#8526FD').replace('#8C87A3','#B9B0D6')
@@ -469,7 +470,7 @@ oaiq("init",{pixelId:"CbBgBJtt4xhQJgymGrK5Ys"});oaiq("measure","page_viewed",{ty
         <p class="motto">עם כוח גדול מגיעה אחריות גדולה, ועם תקציב גדול עוד יותר.</p>
       </div>
       <nav aria-label="ניווט בפוטר"><h3>באתר</h3><ul><li><a href="#perf">השירותים שלנו</a></li><li><a href="#about">מי אנחנו</a></li><li><a href="#clients">לקוחות</a></li><li><a href="services.html">כל השירותים</a></li><li><a href="knowledge.html">ידע</a></li><li><a href="#contact">דברו איתנו</a></li></ul></nav>
-      <div><h3>השירותים</h3><ul><li><a href="services/meta-ads.html">קמפיינים במטא</a></li><li><a href="services/google-ads.html">קמפיינים בגוגל</a></li><li><a href="services/performance.html">פרפורמנס לתקציבים גדולים</a></li><li><a href="services/chatgpt-ads.html">פרסום בצ'אט ג'יפיטי</a></li><li><a href="services/creative.html">קריאייטיב</a></li><li><a href="services/ai-for-business.html">בינה מלאכותית לעסקים</a></li></ul></div>
+      __SVCFOOT__<div><h3>השירותים</h3><ul><li><a href="services/meta-ads.html">קמפיינים במטא</a></li><li><a href="services/google-ads.html">קמפיינים בגוגל</a></li><li><a href="services/performance.html">פרפורמנס לתקציבים גדולים</a></li><li><a href="services/chatgpt-ads.html">פרסום בצ'אט ג'יפיטי</a></li><li><a href="services/creative.html">קריאייטיב</a></li><li><a href="services/ai-for-business.html">בינה מלאכותית לעסקים</a></li></ul></div>
       <div class="contact"><h3>דברו איתנו</h3><ul><li><a href="mailto:__MAIL__"><bdi>__MAIL__</bdi></a></li><li><a href="tel:+__PHONE_INTL__"><bdi>__PL__</bdi></a></li><li><span>תל אביב, ישראל</span></li></ul><a class="wa" href="__WA__" target="_blank" rel="noopener">וואטסאפ</a></div>
     </div>
     <div class="bottom"><span>© 2026 Z.G Digital Ltd · ז.ג דיגיטל בע"מ</span><a href="accessibility.html">הצהרת נגישות</a><a href="agents.html">מידע מסודר לסוכני AI</a></div>
@@ -543,14 +544,16 @@ function morpher(el,texts,colors,morph,hold){ const a=el.querySelector('.m1'), b
   Object.keys(F).forEach(k=>{ F[k].addEventListener('blur',()=>check(k)); F[k].addEventListener('input',()=>{ if(F[k].closest('.field').classList.contains('bad')) check(k); }); });
   const btn=f.querySelector('button[type=submit]'), ok=document.getElementById('ok');
   if(!LEAD_ENDPOINT) btn.textContent='שלחו לנו בוואטסאפ';
-  const done=(viaWa)=>{ try{ sessionStorage.setItem('zg_lead','1'); }catch(_){} location.href=(f.dataset.thanks||'thanks.html')+(viaWa?'?via=wa':''); };
+  // מעבר לדף התודה. ליד נמדד רק כשהשרת אישר ושמר (verified=true); וואטסאפ, ספאם וכשל שרת מגיעים לדף בלי סימון ליד.
+  const thanksUrl=(via)=>{ const q=new URLSearchParams(location.search); q.delete('via'); if(via) q.set('via',via); const qs=q.toString(); return (f.dataset.thanks||'thanks.html')+(qs?'?'+qs:''); };
+  const go=(verified,via)=>{ if(verified){ try{ sessionStorage.setItem('zg_lead_verified_v2','1'); }catch(_){} } location.href=thanksUrl(via); };
   const payload=()=>({name:F.name.value.trim(),phone:F.phone.value.trim(),biz:document.getElementById('f-biz').value.trim(),website:document.getElementById('f-web').value,page:location.href});
-  const viaWhatsApp=p=>{ const t=`היי, אני ${p.name}. טלפון: ${p.phone}.${p.biz?' '+p.biz:''} (מהאתר)`; window.open(WA_URL+'?text='+encodeURIComponent(t),'_blank','noopener'); done(true); };
+  const viaWhatsApp=p=>{ const t=`היי, אני ${p.name}. טלפון: ${p.phone}.${p.biz?' '+p.biz:''} (מהאתר)`; window.open(WA_URL+'?text='+encodeURIComponent(t),'_blank','noopener'); go(false,'wa'); };
   f.addEventListener('submit',async e=>{ e.preventDefault(); const bad=Object.keys(F).filter(k=>!check(k)); if(bad.length){ F[bad[0]].focus(); return; }
-    const p=payload(); if(p.website) { done(false); return; }
+    const p=payload(); if(p.website) { go(false,''); return; }  // מלכודת ספאם: בלי שליחה ובלי ליד
     if(!LEAD_ENDPOINT){ viaWhatsApp(p); return; }
     btn.disabled=true; const t0=btn.textContent; btn.textContent='שולחים…';
-    try{ const r=await fetch(LEAD_ENDPOINT,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(p),redirect:'follow'}); const j=await r.json(); if(!j.ok) throw new Error(j.error||'bad'); done(false); }
+    try{ const r=await fetch(LEAD_ENDPOINT,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(p),redirect:'follow'}); const j=await r.json(); if(!(j&&j.ok===true&&j.id)) throw new Error((j&&j.error)||'bad'); go(true,''); }
     catch(err){ btn.disabled=false; btn.textContent=t0; viaWhatsApp(p); } });
 })();
 })();
@@ -615,12 +618,16 @@ if THEME=='dark':
     html = html.replace('__CANVAS_HERO__','<canvas id="mist" class="full" aria-hidden="true"></canvas>').replace('__CANVAS_ART__','').replace('__FS__',FS_MIST)
 else:
     html = html.replace('__CANVAS_HERO__','').replace('__CANVAS_ART__','<canvas id="mist" class="ink" aria-hidden="true"></canvas>').replace('__FS__',FS_INK)
-html = html.replace('__TEASER__',TEASER).replace('__VARS__',VARS).replace('__MAN__',MAN).replace('__FG__',FG).replace('__SHADER_BG__',SH_BG).replace('__MIX__',MIX).replace('__HI__',HI).replace('__PARTICLES__',PART)
+html = html.replace('__TEASER__',TEASER).replace('__SVCFOOT__','').replace('__VARS__',VARS).replace('__MAN__',MAN).replace('__FG__',FG).replace('__SHADER_BG__',SH_BG).replace('__MIX__',MIX).replace('__HI__',HI).replace('__PARTICLES__',PART)
 OUT = '/home/claude/site/calm/dark.html' if THEME=='dark' else '/home/claude/site/calm/index.html'
 if THEME=='dark': html = html.replace('<link rel="canonical" href="https://zigzagmedia.co.il/">','<meta name="robots" content="noindex">')
 out = (html.replace('__LOGO_CREAM__',LOGO_CREAM).replace('__LOGO__',LOGO_NAV).replace('__WA__',WA).replace('__PL__',PHONE_LOCAL).replace('__MAIL__',MAIL).replace('__PHONE_INTL__',PHONE_INTL)
         .replace('__LD__','<script type="application/ld+json">'+json.dumps(LD_ORG,ensure_ascii=False)+'</script>')
         .replace('__TICK__',''.join(f'<span>{p}</span>' for p in PLATFORMS)))
+if not SHOW_SVC:
+    out = re.sub(r'<div><h3>השירותים</h3>.*?</div>', '<div><h3>השירותים</h3><ul><li><a href="#perf">פרפורמנס בכל הפלטפורמות</a></li><li><a href="#creative">ניהול צוותי קריאייטיב</a></li><li><a href="#ai">פתרונות בינה מלאכותית</a></li></ul></div>', out, flags=re.S)
+    out = re.sub(r'<p class="rv svclinks">.*?</p>\n?', '', out, flags=re.S)
+    out = out.replace('<li><a href="services.html">כל השירותים</a></li>', '')
 if os.environ.get('CLEAN_URLS') == '1':
     import site_common_clean; out = site_common_clean.clean_urls(out)
 open(OUT,'w').write(out); print('written',THEME,len(out))

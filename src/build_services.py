@@ -6,6 +6,8 @@ import markdown
 from site_common import page, rel, clean_urls
 from build_content import CONTENT_CSS, ARTS, heb_date, SITE
 
+if os.environ.get('SERVICES', '1') == '0':
+    print('services: skipped (SERVICES=0)'); raise SystemExit(0)
 ORDER = ['meta-ads', 'google-ads', 'performance', 'chatgpt-ads', 'creative', 'ai-for-business']
 
 def parse(path):
