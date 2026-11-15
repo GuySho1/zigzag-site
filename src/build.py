@@ -90,8 +90,9 @@ section,header,footer{scroll-margin-top:80px}
 .nav ul{list-style:none;margin:0;padding:0;display:flex;gap:4px;align-items:center;min-width:0}
 .nav a{text-decoration:none;font-weight:500;font-size:15px;display:inline-flex;align-items:center;min-height:44px;padding:0 10px;white-space:nowrap}
 .nav a.btn{background:var(--moon);color:#fff;font-weight:700;padding:0 16px;min-height:44px;margin-inline-start:6px}
-@media (max-width:640px){.nav{padding-left:12px;padding-right:12px}.nav ul{gap:0}.nav a{font-size:14px;padding:0 8px}.nav .logo svg{height:28px}.nav a.btn{padding:0 11px;margin-inline-start:2px}}
-@media (max-width:379px){.nav a{font-size:13px;padding:0 6px}.nav .logo svg{height:24px}.nav a.btn{padding:0 9px}.nav li.hide-xs,.nav li.hide-xs2{display:none}}
+.nav a.agent{font-weight:700}
+@media (max-width:640px){.nav{padding-left:12px;padding-right:12px}.nav ul{gap:0}.nav a{font-size:14px;padding:0 7px}.nav .logo svg{height:26px}.nav a.btn{padding:0 11px;margin-inline-start:2px}.nav li.hide-xs,.nav li.hide-xs2{display:none}}
+@media (max-width:379px){.nav a{font-size:13px;padding:0 6px}.nav .logo svg{height:22px}.nav a.btn{padding:0 9px}.nav li.hide-xxs{display:none}}
 /* type */
 .eyebrow{display:inline-block;font-size:13px;letter-spacing:.05em;font-weight:700;color:var(--bg);background:var(--fg);padding:6px 12px;margin:0 0 14px;position:relative;z-index:2}
 h1,h2{margin:0 0 16px;font-weight:900;line-height:1.02;letter-spacing:-.01em;text-wrap:balance}
@@ -108,6 +109,7 @@ p{margin:0 0 12px}
 .btn{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 24px;background:var(--moon);color:#fff;text-decoration:none;font-weight:700;font-size:17px;transition:transform .18s cubic-bezier(.23,1,.32,1),box-shadow .18s}
 @media (hover:hover){.btn:hover{transform:translateY(-1px);box-shadow:0 10px 24px -12px var(--moon)}}
 .btn:active{transform:scale(.97)}
+.btn.ink{background:var(--fg);color:var(--bg)}
 .link{display:inline-flex;align-items:center;min-height:50px;padding:0 10px;text-decoration:none;font-weight:700;color:var(--fg)}
 .ctas{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 /* frames */
@@ -308,9 +310,10 @@ oaiq("init",{pixelId:"CbBgBJtt4xhQJgymGrK5Ys"});oaiq("measure","page_viewed",{ty
 <nav class="nav" aria-label="ראשי">
   <a class="logo" href="#top" aria-label="דף הבית, Z.G Digital">__LOGO__</a>
   <ul>
-    <li><a href="#perf">שירותים</a></li>
+    <li class="hide-xxs"><a href="#perf">שירותים</a></li>
     <li class="hide-xs"><a href="#about">עלינו</a></li>
     <li class="hide-xs2"><a href="knowledge.html">ידע</a></li>
+    <li><a class="agent" href="marketing-agent.html">סוכן פרסום</a></li>
     <li><a class="btn" href="#contact">דברו איתנו</a></li>
   </ul>
 </nav>
@@ -324,7 +327,7 @@ oaiq("init",{pixelId:"CbBgBJtt4xhQJgymGrK5Ys"});oaiq("measure","page_viewed",{ty
       <p class="lead">סוכנות פרסום ממומן לעסקים עם תקציב ויעד ברור: לידים, מכירות באיקומרס או מוניטין. כמעט 15 שנה, מאות לקוחות, כל הפלטפורמות, ומדידה שאומרת את האמת.</p>
     </div>
     <div class="art-wrap">__CANVAS_ART__<figure class="frame hero-art"><div class="pic" data-par="6"><picture><source type="image/webp" srcset="art/w/azrieli-480.webp 480w, art/w/azrieli-800.webp 800w, art/w/azrieli-970.webp 970w" sizes="(max-width:899px) calc(100vw - 40px), min(45vw, 520px)"><img src="art/azrieli.jpg" alt="איור דיו של מגדלי עזריאלי וירח סגול" fetchpriority="high" width="970" height="1300"></picture></div></figure></div>
-    <div class="ctas"><a class="btn" href="#contact">דברו איתנו</a><a class="link" href="#perf">מה אנחנו עושים ↓</a></div>
+    <div class="ctas"><a class="btn" href="#contact">דברו איתנו</a><a class="btn ink" href="marketing-agent.html">סוכן הפרסום החדש שלך</a><a class="link" href="#perf">מה אנחנו עושים ↓</a></div>
   </div>
 </header>
 
