@@ -14,15 +14,16 @@ SOCIAL = [u for u in [
   '',   # אינסטגרם
   '',   # פייסבוק
 ] if u]
-LD_ORG = {"@context":"https://schema.org","@type":"ProfessionalService","name":"Z.G Digital (זיגזג מדיה)","alternateName":"ז.ג דיגיטל בע\"מ",
+LD_ORG = {"@context":"https://schema.org","@type":"ProfessionalService","@id":"https://zigzagmedia.co.il/#org","name":"Z.G Digital (זיגזג מדיה)","alternateName":"ז.ג דיגיטל בע\"מ",
  "url":"https://zigzagmedia.co.il","email":MAIL,"telephone":"+"+PHONE_INTL,"areaServed":"IL",
  "address":{"@type":"PostalAddress","addressLocality":"תל אביב","addressCountry":"IL"},
- "founder":{"@type":"Person","name":"גיא שושני"}, **({"sameAs":SOCIAL} if SOCIAL else {}),
+ "founder":{"@type":"Person","@id":"https://zigzagmedia.co.il/#guy-shoshani","name":"גיא שושני"}, **({"sameAs":SOCIAL} if SOCIAL else {}),
  "knowsAbout":["Performance marketing","Meta Ads","Google Ads","YouTube Ads","TikTok Ads","ChatGPT Ads","Taboola","Outbrain","Creative team management","Generative AI","Business automation","Landing pages"],
  "makesOffer":[
   {"@type":"Offer","itemOffered":{"@type":"Service","name":"פרפורמנס בכל הפלטפורמות","description":"ניהול תקציבי פרסום בכל הגדלים ולכל המטרות: לידים, מכירות וניהול מוניטין. "+", ".join(PLATFORMS_LONG)}},
   {"@type":"Offer","itemOffered":{"@type":"Service","name":"ניהול והפעלת צוותי קריאייטיב","description":"הכוונה ועבודה בפועל מול צוות יצירת התוכן של הלקוח, מהבריף ועד המודעה שעולה לאוויר"}},
-  {"@type":"Offer","itemOffered":{"@type":"Service","name":"פתרונות בינה מלאכותית","description":"דפי נחיתה ואתרים, אוטומציות עסקיות ותוכן גנרטיבי"}}]}
+  {"@type":"Offer","itemOffered":{"@type":"Service","name":"פתרונות בינה מלאכותית","description":"דפי נחיתה ואתרים, אוטומציות עסקיות ותוכן גנרטיבי"}},
+  {"@type":"Offer","itemOffered":{"@type":"Service","name":"סוכן פרסום בבינה מלאכותית","url":"https://zigzagmedia.co.il/marketing-agent","description":"סוכן בינה מלאכותית שמחובר לחשבונות הפרסום של העסק. מה שמבדל אותו הוא הידע שנכנס אליו: 15 שנות ניסיון של גיא שושני בניהול פרסום ממומן, כולל שיטות עבודה, קייס סטאדיס, נתונים אמיתיים ותובנות מהשטח."}}]}
 
 
 # ---- latest articles for the home-page teaser (front matter only) ----
